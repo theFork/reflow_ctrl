@@ -883,9 +883,9 @@ Connection ~ 1600 7100
 Wire Wire Line
 	2800 7050 2800 7100
 Connection ~ 2800 7100
-Text Label 9500 2000 0    60   ~ 0
-N_mains
 Text Label 9500 2100 0    60   ~ 0
+N_mains
+Text Label 9500 2000 0    60   ~ 0
 PE_mains
 Wire Wire Line
 	9500 2000 10000 2000
@@ -913,9 +913,9 @@ F 3 "" H 10200 3300 60  0000 C CNN
 	1    10200 3300
 	1    0    0    -1  
 $EndComp
-Text Label 9500 3300 0    60   ~ 0
-N_mains
 Text Label 9500 3400 0    60   ~ 0
+N_mains
+Text Label 9500 3300 0    60   ~ 0
 PE_mains
 Wire Wire Line
 	9500 3300 10000 3300
