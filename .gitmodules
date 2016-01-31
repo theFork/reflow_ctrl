@@ -1,0 +1,3 @@
+[submodule "hardware/uMIDI.pretty"]
+	path = hardware/uMIDI.pretty
+	url = git@github.com:theFork/uMIDI.pretty.git
