@@ -60,8 +60,13 @@ U 1 1 56A8F593
 P 6800 2550
 F 0 "U2" H 6600 2750 50  0000 L CNN
 F 1 "MOC3063" H 6600 2350 50  0000 L CNN
-F 2 "" H 6800 2550 50  0000 L CIN
-F 3 "" H 6775 2550 50  0000 L CNN
+F 2 "uMIDI:MOC3063_SMT" H 6800 2550 50  0001 L CIN
+F 3 "https://www.fairchildsemi.com/datasheets/MO/MOC3061M.pdf" H 6775 2550 50  0001 L CNN
+F 4 "MOC3063SR2VM" H 6600 2750 50  0001 L CNN "Manufacturer Part Number"
+F 5 "MOC3063SR2VMCT-ND" H 6600 2750 50  0001 L CNN "Supplier Part Number"
+F 6 "Fairchild Semiconductor" H 6600 2750 50  0001 L CNN "Manufacturer"
+F 7 "Digikey" H 6600 2750 50  0001 L CNN "Supplier"
+F 8 "http://www.digikey.de/product-detail/de/MOC3063SR2VM/MOC3063SR2VMCT-ND/2094175" H 6600 2750 50  0001 L CNN "Supplier Link"
 	1    6800 2550
 	1    0    0    -1  
 $EndComp
@@ -766,8 +771,13 @@ U 1 1 56AFA98D
 P 2200 7150
 F 0 "U1" H 1950 7350 40  0000 C CNN
 F 1 "LT1129CST-3.3" H 2350 7350 40  0000 C CNN
-F 2 "uMIDI:SOT-223" H 2200 7250 35  0000 C CIN
-F 3 "" H 2200 7150 60  0000 C CNN
+F 2 "uMIDI:SOT-223" H 2200 7250 35  0001 C CIN
+F 3 "http://cds.linear.com/docs/en/datasheet/112935ff.pdf" H 2200 7150 60  0001 C CNN
+F 4 "https://www.digikey.de/product-detail/de/LT1129CST-3.3%23PBF/LT1129CST-3.3%23PBF-ND/889181" H 1950 7350 40  0001 C CNN "Supplier Link"
+F 5 "Linear Technology" H 1950 7350 40  0001 C CNN "Manufacturer"
+F 6 "Digikey" H 1950 7350 40  0001 C CNN "Supplier"
+F 7 "LT1129CST-3.3#PBF-ND" H 1950 7350 40  0001 C CNN "Supplier Part Number"
+F 8 "LT1129CST-3.3#PBF" H 1950 7350 40  0001 C CNN "Manufacturer Part Number"
 	1    2200 7150
 	1    0    0    -1  
 $EndComp
