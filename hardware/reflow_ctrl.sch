@@ -111,7 +111,7 @@ U 1 1 56A9124A
 P 9650 1900
 F 0 "F1" H 9610 1960 50  0000 L CNN
 F 1 "Insert 12A slow" H 9350 1800 50  0000 L CNN
-F 2 "Fuse_Holders_and_Fuses:Fuseholder5x20_horiz_open_universal_Type-III" H 9650 1900 60  0001 C CNN
+F 2 "uMIDI:Fuseholder_Schurter_20x5" H 9650 1900 60  0001 C CNN
 F 3 "http://www.schurterinc.com/var/schurter/storage/ilcatalogue/files/document/datasheet/en/pdf/typ_OGD.pdf" H 9650 1900 60  0001 C CNN
 F 4 "Schurter Inc." H 9610 1960 50  0001 L CNN "Manufacturer"
 F 5 "0031.8231" H 9610 1960 50  0001 L CNN "Manufacturer Part Number"
