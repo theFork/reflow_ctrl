@@ -50,7 +50,12 @@ P 8050 2450
 F 0 "U3" H 7800 2800 50  0000 C CNN
 F 1 "BTA41/600B" H 7750 2200 50  0000 C CNN
 F 2 "TO_SOT_Packages_THT:TO-247_Vertical_Neutral123_largePads" H 8050 2450 60  0001 C CNN
-F 3 "" H 8050 2450 60  0000 C CNN
+F 3 "http://www.st.com/web/en/resource/technical/document/datasheet/CD00002263.pdf" H 8050 2450 60  0001 C CNN
+F 4 "http://www.digikey.de/product-detail/de/BTA41-600BRG/497-2431-5-ND/603456" H 7800 2800 50  0001 C CNN "Supplier Link"
+F 5 "STMicroelectronics" H 7800 2800 50  0001 C CNN "Manufacturer"
+F 6 "Digikey" H 7800 2800 50  0001 C CNN "Supplier"
+F 7 "BTA41-600BRG" H 7800 2800 50  0001 C CNN "Manufacturer Part Number"
+F 8 "497-2431-5-ND" H 7800 2800 50  0001 C CNN "Supplier Part Number"
 	1    8050 2450
 	1    0    0    -1  
 $EndComp
@@ -971,4 +976,17 @@ Wire Wire Line
 	4400 2800 4650 2800
 Text Notes 5050 2300 0    60   ~ 0
 Nominal trigger current: 5mA (60mA max)
+$Comp
+L HEATSINK HS1
+U 1 1 56B07BF1
+P 8050 1750
+F 0 "HS1" H 8050 1950 50  0000 C CNN
+F 1 "HEATSINK" H 8050 1700 50  0000 C CNN
+F 2 "" H 8050 1750 60  0000 C CNN
+F 3 "" H 8050 1750 60  0000 C CNN
+	1    8050 1750
+	1    0    0    -1  
+$EndComp
+Text Notes 4000 6750 0    60   ~ 0
+TODO\n* Complete supplier links\n* Add 3 Switches and approx. 3 LEDs\n* Replace USB connector by large type B (THT style)\n* Select Heatsink\n* Add netclasses
 $EndSCHEMATC
