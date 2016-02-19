@@ -358,8 +358,8 @@ U 1 1 56B07BF1
 P 4450 750
 F 0 "HS1" H 4450 950 50  0000 C CNN
 F 1 "HEATSINK" H 4450 700 50  0000 C CNN
-F 2 "" H 4450 750 60  0000 C CNN
-F 3 "" H 4450 750 60  0000 C CNN
+F 2 "uMIDI:Mech-Heatsink_Fischer_SK129_STS" H 4450 750 60  0001 C CNN
+F 3 "http://www.fischerelektronik.de/web_fischer/en_GB/heatsinks/A04/Extruded%20heatsinks%20for%20PCB%20mounting/PR/SK129_50.8_/index.xhtml" H 4450 750 60  0001 C CNN
 F 4 "Fischer Elektronik" H 4450 750 60  0001 C CNN "Manufacturer"
 F 5 "SK 129-50 STS" H 4450 750 60  0001 C CNN "Manufacturer Part Number"
 F 6 "Reichelt" H 4450 750 60  0001 C CNN "Supplier"
