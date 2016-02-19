@@ -240,13 +240,13 @@ F 3 "" H 7000 3450 60  0000 C CNN
 	1    7000 3450
 	1    0    0    -1  
 $EndComp
-Text Label 1400 3700 0    60   ~ 0
+Text Label 2500 3400 2    60   ~ 0
 TC_SCK
-Text Label 1400 3600 0    60   ~ 0
+Text Label 2500 3500 2    60   ~ 0
 ~TC_CS
-Text Label 1400 3500 0    60   ~ 0
+Text Label 2500 3600 2    60   ~ 0
 TC_SO
-Text Label 2350 3600 0    60   ~ 0
+Text Label 2500 3300 2    60   ~ 0
 PWR
 $Comp
 L R R4
@@ -345,19 +345,11 @@ Wire Wire Line
 Wire Wire Line
 	6300 2400 6800 2400
 Wire Wire Line
-	1300 3500 1800 3500
-Wire Wire Line
-	1300 3600 1800 3600
-Wire Wire Line
-	1300 3700 1800 3700
-Wire Wire Line
 	5650 1800 5650 2200
 Connection ~ 5650 2200
 Wire Wire Line
 	5650 900  5650 1300
 Connection ~ 5650 900 
-Wire Wire Line
-	2300 3600 2550 3600
 Text Notes 1450 1300 0    60   ~ 0
 Nominal trigger current: 5mA (60mA max)
 $Comp
@@ -377,13 +369,13 @@ $EndComp
 $Comp
 L CONN_02X05 X1
 U 1 1 56C0B2E0
-P 2050 3500
-F 0 "X1" H 2050 3800 50  0000 C CNN
-F 1 "Master" H 2050 3200 50  0000 C CNN
-F 2 "uMIDI:Con-boxed_header-THT" H 2050 2300 60  0001 C CNN
-F 3 "" H 2050 2300 60  0000 C CNN
-	1    2050 3500
-	1    0    0    -1  
+P 1850 3400
+F 0 "X1" H 1850 3700 50  0000 C CNN
+F 1 "Master" H 1850 3100 50  0000 C CNN
+F 2 "uMIDI:Con-boxed_header-THT" H 1850 2200 60  0001 C CNN
+F 3 "" H 1850 2200 60  0000 C CNN
+	1    1850 3400
+	-1   0    0    -1  
 $EndComp
 $Comp
 L +3.3V #PWR03
@@ -399,33 +391,33 @@ $EndComp
 $Comp
 L +3.3V #PWR04
 U 1 1 56C0C64E
-P 1750 3050
-F 0 "#PWR04" H 1750 2900 50  0001 C CNN
-F 1 "+3.3V" H 1750 3190 50  0000 C CNN
-F 2 "" H 1750 3050 60  0000 C CNN
-F 3 "" H 1750 3050 60  0000 C CNN
-	1    1750 3050
-	1    0    0    -1  
+P 2150 2950
+F 0 "#PWR04" H 2150 2800 50  0001 C CNN
+F 1 "+3.3V" H 2150 3090 50  0000 C CNN
+F 2 "" H 2150 2950 60  0000 C CNN
+F 3 "" H 2150 2950 60  0000 C CNN
+	1    2150 2950
+	-1   0    0    -1  
 $EndComp
 Wire Wire Line
-	1750 3050 1750 3300
+	2150 2950 2150 3200
 Wire Wire Line
-	1750 3300 1800 3300
+	2150 3200 2100 3200
 $Comp
 L GND #PWR05
 U 1 1 56C0CE3A
-P 2350 3750
-F 0 "#PWR05" H 2350 3500 50  0001 C CNN
-F 1 "GND" H 2350 3600 50  0000 C CNN
-F 2 "" H 2350 3750 60  0000 C CNN
-F 3 "" H 2350 3750 60  0000 C CNN
-	1    2350 3750
-	1    0    0    -1  
+P 1550 3650
+F 0 "#PWR05" H 1550 3400 50  0001 C CNN
+F 1 "GND" H 1550 3500 50  0000 C CNN
+F 2 "" H 1550 3650 60  0000 C CNN
+F 3 "" H 1550 3650 60  0000 C CNN
+	1    1550 3650
+	-1   0    0    -1  
 $EndComp
 Wire Wire Line
-	2300 3700 2350 3700
+	1600 3600 1550 3600
 Wire Wire Line
-	2350 3700 2350 3750
+	1550 3600 1550 3650
 $Comp
 L C C1
 U 1 1 56C0D9F5
@@ -488,10 +480,9 @@ Wire Wire Line
 Wire Wire Line
 	2050 4250 2050 4300
 Connection ~ 2050 4300
-NoConn ~ 2300 3300
-NoConn ~ 2300 3400
-NoConn ~ 1800 3400
-NoConn ~ 2300 3500
+NoConn ~ 1600 3200
+NoConn ~ 1600 3300
+NoConn ~ 1600 3400
 $Comp
 L PWR_FLAG #FLG08
 U 1 1 56C22014
@@ -550,4 +541,13 @@ Text Label 5150 1650 1    60   ~ 0
 Snub
 Text Label 4950 900  0    60   ~ 0
 L_main_fused
+Wire Wire Line
+	2500 3400 2100 3400
+Wire Wire Line
+	2500 3600 2100 3600
+Wire Wire Line
+	2500 3500 2100 3500
+Wire Wire Line
+	2500 3300 2100 3300
+NoConn ~ 1600 3500
 $EndSCHEMATC
