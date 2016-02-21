@@ -265,7 +265,7 @@ U 1 1 56AFB9EA
 P 5650 1550
 F 0 "VR1" H 5800 1650 50  0000 C TNN
 F 1 "430V" H 5800 1500 50  0000 C CNN
-F 2 "Varistors:RV_Disc_D21.5_W5.1_P10" H 5650 1550 60  0001 C CNN
+F 2 "Varistors:RV_Disc_D7_W4.5_P5" H 5650 1550 60  0001 C CNN
 F 3 "http://en.tdk.eu/inf/70/db/var_11/SIOV_Leaded_StandarD.pdf" H 5650 1550 60  0001 C CNN
 F 4 "EPCOS (TDK)" V 5710 1504 50  0001 C TNN "Manufacturer"
 F 5 "495-1412-ND" V 5710 1504 50  0001 C TNN "Supplier Part Number"
