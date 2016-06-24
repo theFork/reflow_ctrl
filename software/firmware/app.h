@@ -36,6 +36,8 @@
 
 //---------------- functions and procedures ----------------//
 bool exec_led(const char* command);
+bool exec_shot(const char* command);
+bool exec_temp(const char* command);
 
 
 //---------------- EOF ----------------//

@@ -87,3 +87,17 @@ bool exec_led(const char* command)
 
     return true;
 }
+
+bool exec_shot(const char * const command)
+{
+    // TODO Implement me!
+    usb_puts("Not implemented. :-(");
+    return true;
+}
+
+bool exec_temp(const char * const command)
+{
+    // TODO Implement me!
+    usb_puts("Not implemented. :-(");
+    return true;
+}

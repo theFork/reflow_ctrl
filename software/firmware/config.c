@@ -73,5 +73,17 @@ struct serial_command serial_commands[] = {
                        "      't' = toggle",
         .handler = &exec_led
     },
+    {
+        .cmd_string = "shot",
+        .help_string = "<t>\n"
+                       "Enable the heater for a given time\n"
+                       "<t> : the on-time in 10ms steps, range [1, 10000]",
+        .handler = &exec_shot
+    },
+    {
+        .cmd_string = "temp",
+        .help_string = "Read out the current temperature in Celsius",
+        .handler = &exec_temp
+    },
 };
 uint8_t serial_commands_size = sizeof(serial_commands) / sizeof(struct serial_command);
