@@ -30,7 +30,6 @@
 #include "lib/adc.h"
 #include "lib/background_tasks.h"
 #include "lib/gpio.h"
-#include "lib/midi.h"
 #include "lib/serial_communication.h"
 
 

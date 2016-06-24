@@ -42,20 +42,6 @@ struct gpio_mapping gpio_mappings[] = {
 };
 uint8_t gpio_mappings_size = sizeof(gpio_mappings)/sizeof(struct gpio_mapping);
 
-//---------------- MIDI ----------------//
-struct midi_config midi_config = {
-    .event_handlers = {
-        .control_change = NULL,
-        .note_off       = NULL,
-        .note_on        = NULL,
-        .program_change = NULL
-    },
-    .omni_mode  = true,
-    .rx_channel = MIDI_CHANNEL_01,
-    .signal_rx  = true,
-    .tx_channel = MIDI_CHANNEL_01,
-};
-
 //---------------- Background tasks ----------------//
 background_task_t high_frequency_tasks[] = {
     &serial_communication_task,

@@ -26,7 +26,6 @@
 #include "lib/background_tasks.h"
 #include "lib/gpio.h"
 #include "lib/leds.h"
-#include "lib/midi.h"
 #include "lib/serial_communication.h"
 #include "lib/system.h"
 #include "lib/usb.h"
@@ -55,7 +54,6 @@ int main( void )
     // Initialize modules
     init_leds_module();
     init_gpio_module(gpio_mappings, gpio_mappings_size);
-    init_midi_module(&midi_config);
     init_background_tasks(high_frequency_tasks, high_frequency_tasks_size,
                                 mid_frequency_tasks, mid_frequency_tasks_size,
                                 low_frequency_tasks, low_frequency_tasks_size);
