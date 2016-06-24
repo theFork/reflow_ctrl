@@ -35,6 +35,7 @@
 //                     V A R I A B L E S                      //
 ////////////////////////////////////////////////////////////////
 
+static uint16_t heater_timeout = 0;
 
 
 ////////////////////////////////////////////////////////////////
@@ -90,8 +91,17 @@ bool exec_led(const char* command)
 
 bool exec_shot(const char * const command)
 {
-    // TODO Implement me!
-    usb_puts("Not implemented. :-(");
+    if (strlen(command) < 6 || command[4] != ' ') {
+        usb_puts("Malformed command" USB_NEWLINE);
+        return false;
+    }
+
+    uint16_t length = strtol(command+5, NULL, 10);
+    usb_printf("Enabling heater for %u ms" USB_NEWLINE, length*10);
+
+    // update (i.e. overwrite) countdown
+    heater_timeout = length;
+
     return true;
 }
 
@@ -100,4 +110,19 @@ bool exec_temp(const char * const command)
     // TODO Implement me!
     usb_puts("Not implemented. :-(");
     return true;
+}
+
+void heat_control_task(void)
+{
+    // Heater is on in case there is still timeout left
+    if (heater_timeout > 0) {
+        heater_timeout--;
+        gpio_drive_high(gpio.header1.pin2);
+        set_led(led_red, true);
+    }
+    // Turn off the heater afterwards
+    else {
+        gpio_drive_low(gpio.header1.pin2);
+        set_led(led_red, false);
+    }
 }

@@ -39,6 +39,8 @@ bool exec_led(const char* command);
 bool exec_shot(const char* command);
 bool exec_temp(const char* command);
 
+void heat_control_task(void);
+
 
 //---------------- EOF ----------------//
 #endif // _APP_H

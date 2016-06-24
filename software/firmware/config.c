@@ -37,10 +37,6 @@
 //                     V A R I A B L E S                      //
 ////////////////////////////////////////////////////////////////
 
-//---------------- GPIO ----------------//
-struct gpio_mapping gpio_mappings[] = {
-};
-uint8_t gpio_mappings_size = sizeof(gpio_mappings)/sizeof(struct gpio_mapping);
 
 //---------------- Background tasks ----------------//
 background_task_t high_frequency_tasks[] = {
@@ -55,10 +51,12 @@ uint8_t mid_frequency_tasks_size = sizeof(mid_frequency_tasks)/sizeof(background
 
 background_task_t low_frequency_tasks[] = {
     &update_leds,
+    &heat_control_task,
 };
 uint8_t low_frequency_tasks_size = sizeof(low_frequency_tasks)/sizeof(background_task_t);
 
-//---------------- Custom commands ----------------//
+
+//---------------- Commands ----------------//
 struct serial_command serial_commands[] = {
     {
         .cmd_string = "led",
@@ -87,3 +85,10 @@ struct serial_command serial_commands[] = {
     },
 };
 uint8_t serial_commands_size = sizeof(serial_commands) / sizeof(struct serial_command);
+
+
+//---------------- GPIO ----------------//
+struct gpio_mapping gpio_mappings[] = {
+    { &gpio.header1.pin2, GPIO_OUTPUT },
+};
+uint8_t gpio_mappings_size = sizeof(gpio_mappings)/sizeof(struct gpio_mapping);
