@@ -27,6 +27,7 @@
 #include "lib/gpio.h"
 #include "lib/leds.h"
 #include "lib/serial_communication.h"
+#include "lib/spi.h"
 #include "lib/system.h"
 #include "lib/usb.h"
 
@@ -54,9 +55,10 @@ int main( void )
     // Initialize modules
     init_leds_module();
     init_gpio_module(gpio_mappings, gpio_mappings_size);
+    init_spi_module(&spi_config);
     init_background_tasks(high_frequency_tasks, high_frequency_tasks_size,
-                                mid_frequency_tasks, mid_frequency_tasks_size,
-                                low_frequency_tasks, low_frequency_tasks_size);
+                          mid_frequency_tasks,  mid_frequency_tasks_size,
+                          low_frequency_tasks,  low_frequency_tasks_size);
     init_usb_module();
     init_serial_communication(serial_commands, serial_commands_size);
 

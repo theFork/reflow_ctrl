@@ -25,8 +25,8 @@
 #include "lib/background_tasks.h"
 #include "lib/gpio.h"
 #include "lib/leds.h"
-#include "lib/midi.h"
 #include "lib/serial_communication.h"
+#include "lib/spi.h"
 #include "lib/usb.h"
 
 #include "config.h"
@@ -36,7 +36,6 @@
 ////////////////////////////////////////////////////////////////
 //                     V A R I A B L E S                      //
 ////////////////////////////////////////////////////////////////
-
 
 //---------------- Background tasks ----------------//
 background_task_t high_frequency_tasks[] = {
@@ -92,3 +91,15 @@ struct gpio_mapping gpio_mappings[] = {
     { &gpio.header1.pin2, GPIO_OUTPUT },
 };
 uint8_t gpio_mappings_size = sizeof(gpio_mappings)/sizeof(struct gpio_mapping);
+
+
+//---------------- SPI ----------------//
+struct spi_config spi_config = {
+    .clk_phase      = true,
+    .clk_polarity   = false,
+    .word_length    = 16,
+    .clk_pin        = &gpio.header1.pin5,
+    .miso_pin       = &gpio.header1.pin9,
+    .mosi_pin       = NULL,
+    .ncs_pin        = &gpio.header1.pin7,
+};
