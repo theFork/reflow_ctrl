@@ -132,8 +132,8 @@ include $(LUFA_PATH)/LUFA/makefile
 
 # Determine the list of C source files
 SRC  = $(wildcard *.c)
-SRC += lib/gpio.c lib/background_tasks.c lib/leds.c lib/serial_communication.c
-SRC += lib/system.c lib/usb.c lib/usb_descriptors.c
+SRC += lib/background_tasks.c lib/gpio.c lib/leds.c lib/serial_communication.c
+SRC += lib/spi.c lib/system.c lib/usb.c lib/usb_descriptors.c
 SRC += $(XBOOT_PATH)/xbootapi.c
 SRC += $(LUFA_SRC_USB_DEVICE) $(LUFA_PATH)/LUFA/Drivers/USB/Class/Device/CDCClassDevice.c
 
