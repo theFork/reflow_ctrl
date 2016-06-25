@@ -107,8 +107,42 @@ bool exec_shot(const char * const command)
 
 bool exec_temp(const char * const command)
 {
-    // TODO Implement me!
-    usb_puts("Not implemented. :-(");
+    if (strlen(command) != 4) {
+        usb_puts("Malformed command" USB_NEWLINE);
+        return false;
+    }
+
+    // "Send" dummy value to recieve data
+    spi_select(true);
+    uint16_t input_word = spi_transceive(0);
+    spi_select(false);
+
+    // Abort if no thermo couple is connected
+    if (input_word & 0x4) {
+        usb_puts("Error: No thermo couple connected!" USB_NEWLINE ":-(");
+        return true;
+    }
+
+    // Parse and print temperature
+    uint16_t temperature = input_word >> 3;
+
+    const char* fractional = "00";
+    switch (temperature % 4) {
+        case 3:
+            fractional = "75";
+            break;
+        case 2:
+            fractional = "50";
+            break;
+        case 1:
+            fractional = "25";
+            break;
+        default:
+            break;
+    }
+    temperature >>= 2;
+
+    usb_printf("Temperature: %4u.%s" USB_NEWLINE, temperature, fractional);
     return true;
 }
 
