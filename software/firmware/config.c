@@ -78,6 +78,13 @@ struct serial_command serial_commands[] = {
         .handler = &exec_shot
     },
     {
+        .cmd_string = "offs",
+        .help_string = "<t>\n"
+                       "Stores an offset for temperature measurements\n"
+                       "<t> : offset in [K/4], 16 bit signed integer",
+        .handler = &exec_offs
+    },
+    {
         .cmd_string = "temp",
         .help_string = "Read out the current temperature in Celsius",
         .handler = &exec_temp

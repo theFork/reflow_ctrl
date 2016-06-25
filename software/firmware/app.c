@@ -37,6 +37,9 @@
 
 static uint16_t heater_timeout = 0;
 
+static int16_t temp_offset = 0;
+static uint16_t temp_offset_eemem EEMEM;
+
 
 ////////////////////////////////////////////////////////////////
 //      F U N C T I O N S   A N D   P R O C E D U R E S       //
@@ -105,6 +108,18 @@ bool exec_shot(const char * const command)
     return true;
 }
 
+bool exec_offs(const char* command)
+{
+    if (strlen(command) < 6 || command[4] != ' ') {
+        usb_puts("Malformed command" USB_NEWLINE);
+        return false;
+    }
+
+    temp_offset = strtol(command+5, NULL, 10);
+    eeprom_write_word(&temp_offset_eemem, temp_offset);
+    return true;
+}
+
 bool exec_temp(const char * const command)
 {
     if (strlen(command) != 4) {
@@ -125,6 +140,7 @@ bool exec_temp(const char * const command)
 
     // Parse and print temperature
     uint16_t temperature = input_word >> 3;
+    temperature += temp_offset;
 
     const char* fractional = "00";
     switch (temperature % 4) {
@@ -159,4 +175,9 @@ void heat_control_task(void)
         gpio_drive_low(gpio.header1.pin2);
         set_led(led_red, false);
     }
+}
+
+void restore_temp_offset(void)
+{
+    temp_offset = eeprom_read_word(&temp_offset_eemem);
 }

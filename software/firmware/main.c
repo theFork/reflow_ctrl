@@ -62,6 +62,8 @@ int main( void )
     init_usb_module();
     init_serial_communication(serial_commands, serial_commands_size);
 
+    restore_temp_offset();
+
     // set watchdog for 128ms
     wdt_enable(WDT_PER_128CLK_gc);
 
