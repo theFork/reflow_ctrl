@@ -1,3 +1,5 @@
+import org.jfree.ui.RefineryUtilities;
+
 /**
  * Reflow control program entry and main method.
  * @author haggl
@@ -11,14 +13,22 @@ public final class ReflowControl {
      * @throws InterruptedException
      */
     public static void main(String[] args) throws InterruptedException {
+
+    	// Display main window
+		final MainWindow window = new MainWindow("Reflow Control");
+        window.pack();
+        RefineryUtilities.centerFrameOnScreen(window);
+        window.setVisible(true);
+
+        // Setup communicator
         final Communicator communicator = Communicator.getInstance();
         if (!communicator.connect("/dev/umidi")) {
-            System.exit(-1);
+            // TODO: Complain
         }
-        for (int i=0; i<3; ++i) {
-            communicator.transceive("temp");
-            Thread.sleep(100);
-        }
+        
+        // TODO: Start controller task
+        
+        // Tear down
         communicator.disconnect();
     }
 }

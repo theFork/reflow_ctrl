@@ -92,14 +92,4 @@ public final class MainWindow extends ApplicationFrame {
                 
         return chart;
     }
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		final MainWindow window = new MainWindow("Line Chart Demo 6");
-        window.pack();
-        RefineryUtilities.centerFrameOnScreen(window);
-        window.setVisible(true);
-	}
 }
