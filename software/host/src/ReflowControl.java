@@ -15,10 +15,7 @@ public final class ReflowControl {
     public static void main(String[] args) throws InterruptedException {
 
     	// Display main window
-		final MainWindow window = new MainWindow("Reflow Control");
-        window.pack();
-        RefineryUtilities.centerFrameOnScreen(window);
-        window.setVisible(true);
+		final MainWindow window = new MainWindow();
 
         // Setup communicator
         final Communicator communicator = Communicator.getInstance();

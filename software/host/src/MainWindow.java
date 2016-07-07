@@ -1,33 +1,44 @@
-import java.awt.Color;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.text.NumberFormat;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
-import org.jfree.ui.ApplicationFrame;
-import org.jfree.ui.RefineryUtilities;
 
 /**
  * So far, just a proof of concept...
  * @author simon
  */
-@SuppressWarnings("serial")
-public final class MainWindow extends ApplicationFrame {
+public final class MainWindow {
+	
+	private static final String title = "Reflow Control";
+	private ChartPanel chartPanel = createChart();
 
-	public MainWindow(String title) {
-		super(title);
-
-		final XYDataset dataset = createDataset();
-		final JFreeChart chart = createChart(dataset);
-		final ChartPanel chartPanel = new ChartPanel(chart);
-		chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
-		setContentPane(chartPanel);
+	public MainWindow() {
+		JFrame f = new JFrame(title);
+        f.setTitle(title);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setLayout(new BorderLayout(0, 5));
+        f.add(chartPanel, BorderLayout.CENTER);
+        chartPanel.setMouseWheelEnabled(true);
+        chartPanel.setHorizontalAxisTrace(true);
+        chartPanel.setVerticalAxisTrace(true);
+        
+        JPanel panel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        f.add(panel, BorderLayout.SOUTH);
+        f.pack();
+        f.setLocationRelativeTo(null);
+        f.setVisible(true); 
 	}
 		 
 	/**
@@ -53,43 +64,18 @@ public final class MainWindow extends ApplicationFrame {
 		return dataset;
 	}
 	
-	/**
-     * Creates a chart
-     * 
-     * @param dataset  the data for the chart.
-     * 
-     * @return a chart.
-     */
-    private JFreeChart createChart(final XYDataset dataset) {
-        
-        // create the chart...
-        final JFreeChart chart = ChartFactory.createXYLineChart(
-            "Chart Title",      	  // chart title
-            "Time",                   // x axis label
-            "Temperature",            // y axis label
-            dataset,                  // data
-            PlotOrientation.VERTICAL,
-            true,                     // include legend
-            true,                     // tooltips
-            false                     // urls
-        );
-
-        // chart format
-        chart.setBackgroundPaint(Color.white);
-
-        final XYPlot plot = chart.getXYPlot();
-        plot.setBackgroundPaint(Color.lightGray);
-        plot.setDomainGridlinePaint(Color.white);
-        plot.setRangeGridlinePaint(Color.white);
-        
-        final XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-        renderer.setSeriesLinesVisible(0, true);
-        plot.setRenderer(renderer);
-
-        // change the auto tick unit selection to integer units only
-        final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-                
-        return chart;
+    private ChartPanel createChart() {
+    	XYDataset roiData = createDataset();
+        JFreeChart chart = ChartFactory.createTimeSeriesChart(
+            title, "Date", "Value", roiData, true, true, false);
+        XYPlot plot = chart.getXYPlot();
+        XYLineAndShapeRenderer renderer =
+            (XYLineAndShapeRenderer) plot.getRenderer();
+        renderer.setBaseShapesVisible(true);
+        NumberFormat currency = NumberFormat.getCurrencyInstance();
+        currency.setMaximumFractionDigits(0);
+        NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+        rangeAxis.setNumberFormatOverride(currency);
+        return new ChartPanel(chart);
     }
 }
