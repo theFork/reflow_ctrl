@@ -1,3 +1,5 @@
+package de.umidi.reflowcontrol.ui;
+
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.text.NumberFormat;

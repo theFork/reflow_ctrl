@@ -1,4 +1,6 @@
-import org.jfree.ui.RefineryUtilities;
+package de.umidi.reflowcontrol;
+
+import de.umidi.reflowcontrol.ui.MainWindow;
 
 /**
  * Reflow control program entry and main method.
