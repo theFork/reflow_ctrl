@@ -13,10 +13,12 @@ The system consists of a
 ## Reflow Board Interface
 The reflow board IS connected to uMIDI header GPIO1 as follows:
 
-2: PWR
-5: SCK
-7: CS_n
-9: SO
+| Pin | Function |
+|-----|----------|
+| 2   | PWR      |
+| 5   | SCK      |
+| 7   | ~CS      |
+| 9   | MISO     |
 
 The reflow board IS equipped with a MAX6675 cold junction compensator and
 AD-conversion chip.

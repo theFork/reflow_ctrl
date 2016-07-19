@@ -1,33 +1,4 @@
 EESchema Schematic File Version 2
-LIBS:power
-LIBS:device
-LIBS:transistors
-LIBS:conn
-LIBS:linear
-LIBS:regul
-LIBS:74xx
-LIBS:cmos4000
-LIBS:adc-dac
-LIBS:memory
-LIBS:xilinx
-LIBS:microcontrollers
-LIBS:dsp
-LIBS:microchip
-LIBS:analog_switches
-LIBS:motorola
-LIBS:texas
-LIBS:intel
-LIBS:audio
-LIBS:interface
-LIBS:digital-audio
-LIBS:philips
-LIBS:display
-LIBS:cypress
-LIBS:siliconi
-LIBS:opto
-LIBS:atmel
-LIBS:contrib
-LIBS:valves
 LIBS:reflow_ctrl-cache
 EELAYER 25 0
 EELAYER END
@@ -550,4 +521,18 @@ Wire Wire Line
 Wire Wire Line
 	1400 3200 1600 3200
 NoConn ~ 2100 3300
+$Comp
+L GND #PWR?
+U 1 1 576EC66B
+P 6650 3550
+F 0 "#PWR?" H 6650 3300 50  0001 C CNN
+F 1 "GND" H 6650 3400 50  0000 C CNN
+F 2 "" H 6650 3550 60  0000 C CNN
+F 3 "" H 6650 3550 60  0000 C CNN
+	1    6650 3550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	6650 3550 6650 3500
+Connection ~ 6650 3500
 $EndSCHEMATC
