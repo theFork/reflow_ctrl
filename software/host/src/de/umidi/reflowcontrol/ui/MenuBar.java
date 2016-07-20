@@ -3,6 +3,10 @@
  */
 package de.umidi.reflowcontrol.ui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -18,7 +22,17 @@ public final class MenuBar extends JMenuBar {
 
         // File menu
         JMenu FileMenu = new JMenu("File");
+        FileMenu.setMnemonic(KeyEvent.VK_F);
         JMenuItem FileQuitMenuItem = new JMenuItem("Quit");
+        FileQuitMenuItem.setMnemonic(KeyEvent.VK_Q);
+        FileQuitMenuItem.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO: Save before exit?
+                System.exit(0);
+            }
+        });
         FileMenu.add(FileQuitMenuItem);
 
         // Help menu
