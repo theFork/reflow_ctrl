@@ -38,20 +38,40 @@ public final class Communicator {
     private Communicator() {
     }
 
+    private String transceive(String command) {
+        try {
+            // Request
+            System.out.println(">> " + command);
+            Thread.sleep(100);
+            this.port.writeBytes(command.getBytes());
+            this.port.writeByte((byte) '\r');
+
+            // Reply, strip reply line omitting local echo
+            final String reply = this.port.readString();
+            final Pattern pattern = Pattern.compile(".*\r\n(.*)\r\n*");
+            final Matcher matcher = pattern.matcher(reply);
+            if (matcher.find()) {
+                System.out.println(matcher.group(1));
+            }
+            return reply;
+
+            // Remove echo from uMidi board
+        } catch (final Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public Boolean connect(String devicePath) {
         this.port = new SerialPort(devicePath);
         try {
             System.out.println("Opening port: " + this.port.openPort());
             System.out.println("Setting parameters`: " + this.port.setParams(9600, 8, 1, 0));
-            this.port.writeByte((byte)'\r');
+            this.port.writeByte((byte) '\r');
             Thread.sleep(1000);
             return true;
-        } catch (final SerialPortException e) {
-            System.out.println(e);
-            return false;
-        } catch (final InterruptedException u) {
-            // TODO Auto-generated catch block
-            u.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -64,29 +84,14 @@ public final class Communicator {
         }
     }
 
-    public String transceive(String command) throws InterruptedException {
-        try {
-            // Request
-            System.out.println(">> " + command);
-            Thread.sleep(100);
-            this.port.writeBytes(command.getBytes());
-            this.port.writeByte((byte)'\r');
+    public float getTemperature() {
+        String reply = transceive("temp");
+        float temperature = Float.parseFloat(reply);
+        return temperature;
+    }
 
-
-            // Reply, strip reply line omitting local echo
-            final String reply = this.port.readString();
-            final Pattern pattern = Pattern.compile(".*\r\n(.*)\r\n*");
-            final Matcher matcher = pattern.matcher(reply);
-            if (matcher.find())
-            {
-                System.out.println(matcher.group(1));
-            }
-            return reply;
-
-            // Remove echo from uMidi board
-        } catch (final SerialPortException e) {
-            e.printStackTrace();
-            return null;
-        }
+    public void shot(int milliseconds) {
+        // TODO: 10 .. 100000 ms, in 10ms steps!
+        transceive("shot");
     }
 }
