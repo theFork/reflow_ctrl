@@ -1,12 +1,12 @@
 package de.umidi.reflowcontrol;
 
+import java.awt.EventQueue;
+
 import de.umidi.reflowcontrol.ui.MainWindow;
 
 /**
  * Reflow control program entry and main method.
  * 
- * @author haggl
- *
  */
 public final class ReflowControl {
 
@@ -20,7 +20,12 @@ public final class ReflowControl {
     public static void main(String[] args) throws InterruptedException {
 
         // Display main window
-        final MainWindow window = new MainWindow();
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.setVisible(true);
+            }
+        });
 
         // Setup communicator
         final Communicator communicator = Communicator.getInstance();

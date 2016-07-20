@@ -18,32 +18,31 @@ import org.jfree.data.xy.XYDataset;
  * 
  * @author simon
  */
-public final class MainWindow {
+public final class MainWindow extends JFrame {
 
     private static final String title = "Reflow Control";
     private ChartPanel chartPanel = createChart();
 
     public MainWindow() {
         // Prepare JFrame
-        JFrame f = new JFrame(title);
-        f.setTitle(title);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.setLayout(new BorderLayout(0, 5));
+        super();
+        this.setTitle(title);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLayout(new BorderLayout(0, 5));
 
         // Add temperature graph panel
-        f.add(chartPanel, BorderLayout.CENTER);
+        this.add(chartPanel, BorderLayout.CENTER);
         chartPanel.setMouseWheelEnabled(true);
         chartPanel.setHorizontalAxisTrace(true);
         chartPanel.setVerticalAxisTrace(true);
 
         // Add menu bar
         MenuBar menuBar = new MenuBar();
-        f.add(menuBar, BorderLayout.NORTH);
+        this.add(menuBar, BorderLayout.NORTH);
 
         // Display window
-        f.pack();
-        f.setLocationRelativeTo(null);
-        f.setVisible(true);
+        this.pack();
+        this.setLocationRelativeTo(null);
     }
 
     private ChartPanel createChart() {
