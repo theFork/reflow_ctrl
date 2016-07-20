@@ -8,12 +8,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 /**
- * @author simon
- *
+ * The menu bar
  */
+@SuppressWarnings("serial")
 public final class MenuBar extends JMenuBar {
-
-    private static final long serialVersionUID = 1L;
 
     public MenuBar() {
         super();

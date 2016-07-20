@@ -6,8 +6,6 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 /**
  * This class handles the collection and preparation of data to be plotted.
- * 
- * @author simon
  */
 public class GraphDataLogger {
 

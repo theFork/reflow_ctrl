@@ -15,9 +15,8 @@ import org.jfree.data.xy.XYDataset;
 
 /**
  * So far, just a proof of concept...
- * 
- * @author simon
  */
+@SuppressWarnings("serial")
 public final class MainWindow extends JFrame {
 
     private static final String title = "Reflow Control";

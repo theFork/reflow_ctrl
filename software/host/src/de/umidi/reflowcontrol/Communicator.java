@@ -8,9 +8,6 @@ import jssc.SerialPortException;
 
 /**
  * This class handles communication with the uMidi board controlling the heater.
- *
- * @author haggl
- *
  */
 public final class Communicator {
     /**

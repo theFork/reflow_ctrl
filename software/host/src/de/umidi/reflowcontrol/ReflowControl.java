@@ -6,7 +6,6 @@ import de.umidi.reflowcontrol.ui.MainWindow;
 
 /**
  * Reflow control program entry and main method.
- * 
  */
 public final class ReflowControl {
 
