@@ -20,9 +20,8 @@ import org.jfree.data.xy.XYDataset;
 public final class MainWindow extends JFrame {
 
     private static final String title = "Reflow Control";
-    private ChartPanel chartPanel = createChart();
 
-    public MainWindow() {
+    public MainWindow(XYDataset data) {
         // Prepare JFrame
         super();
         this.setTitle(title);
@@ -30,6 +29,7 @@ public final class MainWindow extends JFrame {
         this.setLayout(new BorderLayout(0, 5));
 
         // Add temperature graph panel
+        ChartPanel chartPanel = this.createChart(data);
         this.add(chartPanel, BorderLayout.CENTER);
         chartPanel.setMouseWheelEnabled(true);
         chartPanel.setHorizontalAxisTrace(true);
@@ -44,9 +44,8 @@ public final class MainWindow extends JFrame {
         this.setLocationRelativeTo(null);
     }
 
-    private ChartPanel createChart() {
-        XYDataset roiData = new GraphDataLogger().getDataset();
-        JFreeChart chart = ChartFactory.createTimeSeriesChart(title, "Date", "Value", roiData, true, true, false);
+    private ChartPanel createChart(XYDataset data) {
+        JFreeChart chart = ChartFactory.createTimeSeriesChart(title, "Date", "Value", data, true, true, false);
         XYPlot plot = chart.getXYPlot();
         XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
         renderer.setBaseShapesVisible(true);
