@@ -92,22 +92,6 @@ bool exec_led(const char* command)
     return true;
 }
 
-bool exec_shot(const char * const command)
-{
-    if (strlen(command) < 6 || command[4] != ' ') {
-        usb_puts("Malformed command" USB_NEWLINE);
-        return false;
-    }
-
-    uint16_t length = strtol(command+5, NULL, 10);
-    usb_printf("Enabling heater for %u ms" USB_NEWLINE, length*10);
-
-    // update (i.e. overwrite) countdown
-    heater_timeout = length;
-
-    return true;
-}
-
 bool exec_offs(const char* command)
 {
     if (strlen(command) < 6 || command[4] != ' ') {
@@ -117,6 +101,22 @@ bool exec_offs(const char* command)
 
     temp_offset = strtol(command+5, NULL, 10);
     eeprom_write_word(&temp_offset_eemem, temp_offset);
+    return true;
+}
+
+bool exec_shot(const char * const command)
+{
+    if (strlen(command) < 6 || command[4] != ' ') {
+        usb_puts("Malformed command" USB_NEWLINE);
+        return false;
+    }
+
+    uint16_t length = strtol(command+5, NULL, 10);
+    usb_printf("Enabling heater for %llu ms" USB_NEWLINE, length*10);
+
+    // update (i.e. overwrite) countdown
+    heater_timeout = length;
+
     return true;
 }
 
