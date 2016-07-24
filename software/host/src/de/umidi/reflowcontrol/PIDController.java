@@ -10,9 +10,9 @@ public class PIDController {
     private final double dt;
 
     /**
-     * Proportional coefficient.
+     * Differential coefficient.
      */
-    private final double Kp;
+    private final double Kd;
 
     /**
      * Integral coefficient.
@@ -20,9 +20,9 @@ public class PIDController {
     private final double Ki;
 
     /**
-     * Differential coefficient.
+     * Proportional coefficient.
      */
-    private final double Kd;
+    private final double Kp;
 
     /**
      * Internal buffer for the integrator.
@@ -38,6 +38,21 @@ public class PIDController {
      * Current setpoint of the controller.
      */
     private double setpoint = 0.0;
+
+    /**
+     * Differential part of the last output value.
+     */
+    private double differentialTerm = 0.0;
+
+    /**
+     * Integral part of the last output value.
+     */
+    private double integralTerm = 0.0;
+
+    /**
+     * Proportional part of the last output value.
+     */
+    private double proportionalTerm = 0.0;
 
     /**
      * Standard constructor.
@@ -66,12 +81,16 @@ public class PIDController {
         return this.setpoint;
     }
 
-    /**
-     * @param the
-     *            new setpoint
-     */
-    public void updateSetpoint(double setpoint) {
-        this.setpoint = setpoint;
+    public double getLastDifferentialTerm() {
+        return differentialTerm;
+    }
+
+    public double getLastIntegralTerm() {
+        return integralTerm;
+    }
+
+    public double getLastProportionalTerm() {
+        return proportionalTerm;
     }
 
     /**
@@ -80,18 +99,28 @@ public class PIDController {
      * Computes the PID controller output based on the provided setpoint and
      * measured value.
      *
-     * @param setpoint
-     *            the desired setpoint
      * @param measured_value
-     *            the last known actual state of the output
-     * @return the next output value
+     *            the last known actual state of the controlled variable
+     * @return the regulating variable
      */
     public double process(double measured_value) {
         double error = this.setpoint - measured_value;
         this.integral += error * this.dt;
         double derivative = (error - this.previous_error) / this.dt;
-        double output = this.Kp * error + this.Ki * this.integral + this.Kd * derivative;
+        this.proportionalTerm = this.Kp * error;
+        this.integralTerm = this.Ki * this.integral;
+        this.differentialTerm = this.Kd * derivative;
         this.previous_error = error;
-        return output;
+        return this.proportionalTerm + this.integralTerm + this.differentialTerm;
+    }
+
+    /**
+     * Updates the PID controller's setpoint.
+     * 
+     * @param setpoint
+     *            the new setpoint
+     */
+    public void updateSetpoint(double setpoint) {
+        this.setpoint = setpoint;
     }
 }
