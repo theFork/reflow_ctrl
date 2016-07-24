@@ -13,6 +13,12 @@ import de.umidi.reflowcontrol.ui.MainWindow;
  */
 public final class ReflowControl {
     /**
+     * When set, the graph contains details about the PID controller output for
+     * debugging purposes.
+     */
+    public static final boolean DEBUG_CONTROLLER = false;
+
+    /**
      * Control loop interval in [ms].
      */
     public static final int CONTROL_LOOP_INTERVAL = 1000;
@@ -46,7 +52,7 @@ public final class ReflowControl {
         try {
             EventQueue.invokeAndWait(new Runnable() {
                 public void run() {
-                    ReflowControl.mainWindow = new MainWindow(logger.getDataset());
+                    ReflowControl.mainWindow = new MainWindow(logger.getDataset(DEBUG_CONTROLLER));
                     ReflowControl.mainWindow.setVisible(true);
                 }
             });
@@ -92,7 +98,9 @@ public final class ReflowControl {
                 communicator.shot((int) duty);
 
                 // Log data
-                logger.addData(controller.getSetpoint(), this.temperature);
+                logger.addData(controller.getSetpoint(), this.temperature, this.controllerOutput,
+                        controller.getLastProportionalTerm(), controller.getLastIntegralTerm(),
+                        controller.getLastDifferentialTerm());
             }
         }, 0, CONTROL_LOOP_INTERVAL, TimeUnit.MILLISECONDS);
 
