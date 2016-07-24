@@ -27,6 +27,11 @@ public final class ReflowControl {
     private static final GraphDataLogger logger = new GraphDataLogger();
 
     /**
+     * Current temperature profile.
+     */
+    private static TemperatureProfile profile;
+
+    /**
      * Program entry point.
      * 
      * @param args
@@ -49,31 +54,22 @@ public final class ReflowControl {
             // TODO: Complain
         }
 
+        // Load temperature profile
+        profile = new TemperatureProfile();
+        profile.loadFile("profiles/test.csv");
+
         // Start controller task
         Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(new Runnable() {
             private double temperature = 0;
             private double controllerOutput = 0;
 
-            // TODO: Remove this block and implement "real" setpoint management
-            private int setpointUpdateCounter = SETPOINT_UPDATE_PRESCALER;
-            private static final int SETPOINT_UPDATE_PRESCALER = 10;
-            private int setpointIndex = 0;
-            private final double SETPOINTS[] = { 40, 80, 80, 80, 150, 150, 80, 60, 50, 40, 30, 20 };
+            private int time = 0;
 
             @Override
             public void run() {
-                // TODO: Remove this block and implement "real" setpoint
-                // management
-                ++this.setpointUpdateCounter;
-                if (this.setpointUpdateCounter >= SETPOINT_UPDATE_PRESCALER) {
-                    this.setpointUpdateCounter = 0;
-
-                    controller.updateSetpoint(SETPOINTS[this.setpointIndex]);
-
-                    if (this.setpointIndex < SETPOINTS.length) {
-                        ++this.setpointIndex;
-                    }
-                }
+                // Get current setpoint from profile
+                controller.updateSetpoint(profile.getSetpoint(time));
+                time++;
 
                 // TODO: Remove this block and fetch measured temperature
                 // Fiddle with the output value to simulate some kind of system
