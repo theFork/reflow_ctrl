@@ -1,6 +1,7 @@
 package de.umidi.reflowcontrol;
 
 import java.awt.EventQueue;
+import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
@@ -15,6 +16,8 @@ public final class ReflowControl {
      * Control loop interval in [ms].
      */
     public static final int CONTROL_LOOP_INTERVAL = 1000;
+
+    public static MainWindow mainWindow = null;
 
     /**
      * Global PID controller instance.
@@ -39,14 +42,17 @@ public final class ReflowControl {
      * @throws InterruptedException
      */
     public static void main(String[] args) throws InterruptedException {
-
         // Display main window
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                MainWindow mainWindow = new MainWindow(logger.getDataset());
-                mainWindow.setVisible(true);
-            }
-        });
+        try {
+            EventQueue.invokeAndWait(new Runnable() {
+                public void run() {
+                    ReflowControl.mainWindow = new MainWindow(logger.getDataset());
+                    ReflowControl.mainWindow.setVisible(true);
+                }
+            });
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
 
         // Setup communicator
         final Communicator communicator = Communicator.getInstance();
@@ -62,13 +68,16 @@ public final class ReflowControl {
         Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(new Runnable() {
             private double temperature = 0;
             private double controllerOutput = 0;
+            private double setpoint = 0;
 
             private int time = 0;
 
             @Override
             public void run() {
-                // Get current setpoint from profile
-                controller.updateSetpoint(profile.getSetpoint(time));
+                // Get current setpoint from profile]
+                setpoint = profile.getSetpoint(time);
+                controller.updateSetpoint(setpoint);
+                ReflowControl.mainWindow.statusBar.showTemperatures(setpoint, this.temperature);
                 time++;
 
                 // TODO: Remove this block and fetch measured temperature

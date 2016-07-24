@@ -19,6 +19,8 @@ public final class MainWindow extends JFrame {
     private static final String xLabel = "Time [s]";
     private static final String yLabel = "Temperature [°C]";
 
+    public StatusBar statusBar;
+
     public MainWindow(XYDataset data) {
         // Prepare JFrame
         super();
@@ -39,7 +41,7 @@ public final class MainWindow extends JFrame {
         this.add(menuBar, BorderLayout.NORTH);
 
         // Add status bar
-        StatusBar statusBar = new StatusBar();
+        statusBar = new StatusBar();
         this.add(statusBar, BorderLayout.SOUTH);
 
         // TODO: Call these methods somewhere else!
