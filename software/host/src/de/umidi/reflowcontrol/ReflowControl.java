@@ -80,15 +80,16 @@ public final class ReflowControl {
                 ReflowControl.mainWindow.statusBar.showTemperatures(setpoint, this.temperature);
                 time++;
 
-                // TODO: Remove this block and fetch measured temperature
-                // Fiddle with the output value to simulate some kind of system
-                // behavior.
-                this.temperature += (this.controllerOutput - this.temperature) * 0.123; // inertia
-                this.temperature -= 7.238; // constant offset
-                this.temperature *= 0.95; // dissipation
+                // Fetch measured temperature from controller board
+                this.temperature = communicator.getTemperature();
 
                 // Invoke PID controller
                 this.controllerOutput = controller.process(this.temperature);
+
+                // Convert controller output to duty cycle and send shot command
+                double duty = CONTROL_LOOP_INTERVAL < this.controllerOutput ? CONTROL_LOOP_INTERVAL
+                        : this.controllerOutput;
+                communicator.shot((int) duty);
 
                 // Log data
                 logger.addData(controller.getSetpoint(), this.temperature);
@@ -96,6 +97,7 @@ public final class ReflowControl {
         }, 0, CONTROL_LOOP_INTERVAL, TimeUnit.MILLISECONDS);
 
         // Tear down
-        communicator.disconnect();
+        // TODO: This must be done in some kind of SWT teardown callback
+        // communicator.disconnect();
     }
 }
