@@ -38,6 +38,15 @@ public final class MainWindow extends JFrame {
         MenuBar menuBar = new MenuBar();
         this.add(menuBar, BorderLayout.NORTH);
 
+        // Add status bar
+        StatusBar statusBar = new StatusBar();
+        this.add(statusBar, BorderLayout.SOUTH);
+
+        // TODO: Call these methods somewhere else!
+        statusBar.showConnected(false);
+        statusBar.showMessage("Welcome!");
+        statusBar.showTemperatures(50, 52.4);
+
         // Display window
         this.pack();
         this.setLocationRelativeTo(null);
