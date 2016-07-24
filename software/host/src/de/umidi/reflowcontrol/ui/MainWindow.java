@@ -1,16 +1,12 @@
 package de.umidi.reflowcontrol.ui;
 
 import java.awt.BorderLayout;
-import java.text.NumberFormat;
 
 import javax.swing.JFrame;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYDataset;
 
 /**
@@ -20,6 +16,8 @@ import org.jfree.data.xy.XYDataset;
 public final class MainWindow extends JFrame {
 
     private static final String title = "Reflow Control";
+    private static final String xLabel = "Time [s]";
+    private static final String yLabel = "Temperature [°C]";
 
     public MainWindow(XYDataset data) {
         // Prepare JFrame
@@ -29,7 +27,8 @@ public final class MainWindow extends JFrame {
         this.setLayout(new BorderLayout(0, 5));
 
         // Add temperature graph panel
-        ChartPanel chartPanel = this.createChart(data);
+        ChartPanel chartPanel = new ChartPanel(ChartFactory.createXYLineChart(title, xLabel, yLabel, data,
+                PlotOrientation.VERTICAL, true, true, false));
         this.add(chartPanel, BorderLayout.CENTER);
         chartPanel.setMouseWheelEnabled(true);
         chartPanel.setHorizontalAxisTrace(true);
@@ -42,17 +41,5 @@ public final class MainWindow extends JFrame {
         // Display window
         this.pack();
         this.setLocationRelativeTo(null);
-    }
-
-    private ChartPanel createChart(XYDataset data) {
-        JFreeChart chart = ChartFactory.createTimeSeriesChart(title, "Date", "Value", data, true, true, false);
-        XYPlot plot = chart.getXYPlot();
-        XYLineAndShapeRenderer renderer = (XYLineAndShapeRenderer) plot.getRenderer();
-        renderer.setBaseShapesVisible(true);
-        NumberFormat currency = NumberFormat.getCurrencyInstance();
-        currency.setMaximumFractionDigits(0);
-        NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-        rangeAxis.setNumberFormatOverride(currency);
-        return new ChartPanel(chart);
     }
 }
