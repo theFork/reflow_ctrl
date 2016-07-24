@@ -39,23 +39,21 @@ public final class Communicator {
         try {
             // Request
             System.out.println(">> " + command);
-            Thread.sleep(100);
             this.port.writeBytes(command.getBytes());
             this.port.writeByte((byte) '\r');
+            Thread.sleep(10);
 
             // Reply, strip reply line omitting local echo
             final String reply = this.port.readString();
             final Pattern pattern = Pattern.compile(".*\r\n(.*)\r\n*");
             final Matcher matcher = pattern.matcher(reply);
             if (matcher.find()) {
-                System.out.println(matcher.group(1));
+                System.out.println("<< " + matcher.group(1));
             }
             return reply;
-
-            // Remove echo from uMidi board
         } catch (final Exception e) {
             e.printStackTrace();
-            return null;
+            return "";
         }
     }
 
@@ -83,12 +81,11 @@ public final class Communicator {
 
     public float getTemperature() {
         String reply = transceive("temp");
-        float temperature = Float.parseFloat(reply);
+        float temperature = Float.parseFloat(reply.substring(reply.indexOf(':') + 1));
         return temperature;
     }
 
     public void shot(int milliseconds) {
-        // TODO: 10 .. 100000 ms, in 10ms steps!
-        transceive("shot");
+        transceive("shot " + milliseconds / 10);
     }
 }
