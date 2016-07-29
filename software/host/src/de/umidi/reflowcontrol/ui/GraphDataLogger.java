@@ -87,16 +87,16 @@ public class GraphDataLogger {
     /**
      * Returns the data set for graph construction.
      *
-     * @param debugController
-     *            when set to `true`, PID controller debug data is included in
-     *            the data set
+     * @param showInternals
+     *            when set to `true`, PID controller internal data is included
+     *            in the data set
      * @return the data set
      */
-    public XYDataset getDataset(boolean debugController) {
+    public XYDataset getDataset(boolean showInternals) {
         final XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(this.temperature);
         dataset.addSeries(this.setpoint);
-        if (debugController) {
+        if (showInternals) {
             dataset.addSeries(this.pidOutput);
             dataset.addSeries(this.pTerm);
             dataset.addSeries(this.iTerm);

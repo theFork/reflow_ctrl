@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -37,6 +38,20 @@ public final class MenuBar extends JMenuBar {
         });
         FileMenu.add(FileQuitMenuItem);
 
+        // View menu
+        JMenu ViewMenu = new JMenu("View");
+        ViewMenu.setMnemonic(KeyEvent.VK_V);
+        JCheckBoxMenuItem viewPlotInternalsCheckbox = new JCheckBoxMenuItem("Plot internals");
+        viewPlotInternalsCheckbox.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                // TODO Auto-generated method stub
+
+            }
+        });
+        ViewMenu.add(viewPlotInternalsCheckbox);
+
         // Help menu
         JMenu HelpMenu = new JMenu("Help");
         JMenuItem HelpAboutMenuItem = new JMenuItem("About");
@@ -51,6 +66,7 @@ public final class MenuBar extends JMenuBar {
 
         // Assemble menu bar
         this.add(FileMenu);
+        this.add(ViewMenu);
         this.add(HelpMenu);
     }
 

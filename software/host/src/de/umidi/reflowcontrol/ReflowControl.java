@@ -16,10 +16,9 @@ public final class ReflowControl {
     public static final String VERSION = "0.0.1";
 
     /**
-     * When set, the graph contains details about the PID controller output for
-     * debugging purposes.
+     * Default setting for the
      */
-    public static final boolean DEBUG_CONTROLLER = false;
+    public static final boolean PLOT_INTERNALS_DEFAULT = false;
 
     /**
      * Control loop interval in [ms].
@@ -55,7 +54,7 @@ public final class ReflowControl {
         try {
             EventQueue.invokeAndWait(new Runnable() {
                 public void run() {
-                    ReflowControl.mainWindow = new MainWindow(logger.getDataset(DEBUG_CONTROLLER));
+                    ReflowControl.mainWindow = new MainWindow(logger.getDataset(PLOT_INTERNALS_DEFAULT));
                     ReflowControl.mainWindow.setVisible(true);
                 }
             });
