@@ -12,6 +12,9 @@ import de.umidi.reflowcontrol.ui.MainWindow;
  * Reflow control program entry and main method.
  */
 public final class ReflowControl {
+
+    public static final String VERSION = "0.0.1";
+
     /**
      * When set, the graph contains details about the PID controller output for
      * debugging purposes.

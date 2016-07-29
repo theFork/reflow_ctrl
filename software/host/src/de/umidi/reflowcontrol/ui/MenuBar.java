@@ -11,6 +11,8 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
+import de.umidi.reflowcontrol.ReflowControl;
+
 /**
  * The menu bar
  */
@@ -38,10 +40,22 @@ public final class MenuBar extends JMenuBar {
         // Help menu
         JMenu HelpMenu = new JMenu("Help");
         JMenuItem HelpAboutMenuItem = new JMenuItem("About");
+        HelpAboutMenuItem.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                showHelpAbout();
+            }
+        });
         HelpMenu.add(HelpAboutMenuItem);
 
         // Assemble menu bar
         this.add(FileMenu);
         this.add(HelpMenu);
+    }
+
+    private void showHelpAbout() {
+        // TODO
+        System.out.println("Reflow Control " + ReflowControl.VERSION);
     }
 }
