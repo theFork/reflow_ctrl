@@ -11,6 +11,7 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 
 import de.umidi.reflowcontrol.ReflowControl;
 
@@ -71,7 +72,6 @@ public final class MenuBar extends JMenuBar {
     }
 
     private void showHelpAbout() {
-        // TODO
-        System.out.println("Reflow Control " + ReflowControl.VERSION);
+        JOptionPane.showMessageDialog(null, "This is\nReflow Control\n" + ReflowControl.VERSION);
     }
 }

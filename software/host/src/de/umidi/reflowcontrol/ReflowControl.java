@@ -13,7 +13,7 @@ import de.umidi.reflowcontrol.ui.MainWindow;
  */
 public final class ReflowControl {
 
-    public static final String VERSION = "0.0.1";
+    public static final String VERSION = "0.1";
 
     /**
      * Default setting for the
