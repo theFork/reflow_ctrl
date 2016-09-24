@@ -36,10 +36,6 @@ public final class MainWindow extends JFrame {
         chartPanel.setHorizontalAxisTrace(true);
         chartPanel.setVerticalAxisTrace(true);
 
-        // Add menu bar
-        MenuBar menuBar = new MenuBar();
-        this.add(menuBar, BorderLayout.NORTH);
-
         // Add status bar
         statusBar = new StatusBar();
         this.add(statusBar, BorderLayout.SOUTH);
