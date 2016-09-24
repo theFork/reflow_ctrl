@@ -1,5 +1,7 @@
 package de.umidi.reflowcontrol.ui;
 
+import java.util.ArrayList;
+
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -57,11 +59,15 @@ public class GraphDataLogger {
         this.dTerm = new XYSeries("D-term");
     }
 
+    public void addTemperatureProfile(ArrayList<Integer> profile) {
+        for (int index = 0; index < profile.size(); ++index) {
+            this.setpoint.add(index, profile.get(index));
+        }
+    }
+
     /**
      * Adds data points to the series.
      *
-     * @param setpoint
-     *            current temperature setpoint
      * @param measurement
      *            current temperature measurement
      * @param pidOutput
@@ -73,9 +79,7 @@ public class GraphDataLogger {
      * @param dTerm
      *            D-term of the PID controller output
      */
-    public void addData(double setpoint, double measurement, double pidOutput, double pTerm, double iTerm,
-            double dTerm) {
-        this.setpoint.add(this.sampleCount, setpoint);
+    public void addData(double measurement, double pidOutput, double pTerm, double iTerm, double dTerm) {
         this.temperature.add(this.sampleCount, measurement);
         this.pidOutput.add(this.sampleCount, pidOutput);
         this.pTerm.add(this.sampleCount, pTerm);

@@ -19,6 +19,13 @@ public class TemperatureProfile {
     private ArrayList<Integer> profile;
 
     /**
+     * @return the profile
+     */
+    public ArrayList<Integer> getSetpointList() {
+        return profile;
+    }
+
+    /**
      * Load a given csv file containing a temperature profile
      * 
      * @param path

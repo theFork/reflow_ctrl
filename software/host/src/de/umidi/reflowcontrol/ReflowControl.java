@@ -2,6 +2,7 @@ package de.umidi.reflowcontrol;
 
 import java.awt.EventQueue;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
@@ -54,8 +55,13 @@ public final class ReflowControl {
         try {
             EventQueue.invokeAndWait(new Runnable() {
                 public void run() {
-                    ReflowControl.mainWindow = new MainWindow(logger.getDataset(PLOT_INTERNALS_DEFAULT));
+                    ReflowControl.mainWindow = new MainWindow(logger.getDataset(true));
                     ReflowControl.mainWindow.setVisible(true);
+
+                    // Load temperature profile
+                    profile = new TemperatureProfile();
+                    profile.loadFile("profiles/test.csv");
+                    logger.addTemperatureProfile(profile.getSetpointList());
                 }
             });
         } catch (InvocationTargetException e) {
@@ -67,10 +73,6 @@ public final class ReflowControl {
         if (!communicator.connect("/dev/umidi")) {
             // TODO: Complain
         }
-
-        // Load temperature profile
-        profile = new TemperatureProfile();
-        profile.loadFile("profiles/test.csv");
 
         // Start controller task
         Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(new Runnable() {
@@ -89,7 +91,9 @@ public final class ReflowControl {
                 time++;
 
                 // Fetch measured temperature from controller board
-                this.temperature = communicator.getTemperature();
+                // TODO: Remove this test code
+                // this.temperature = communicator.getTemperature();
+                this.temperature = setpoint + new Random().nextInt(40) - 20;
 
                 // Invoke PID controller
                 this.controllerOutput = controller.process(this.temperature);
@@ -100,9 +104,8 @@ public final class ReflowControl {
                 communicator.shot((int) duty);
 
                 // Log data
-                logger.addData(controller.getSetpoint(), this.temperature, this.controllerOutput,
-                        controller.getLastProportionalTerm(), controller.getLastIntegralTerm(),
-                        controller.getLastDifferentialTerm());
+                logger.addData(this.temperature, this.controllerOutput, controller.getLastProportionalTerm(),
+                        controller.getLastIntegralTerm(), controller.getLastDifferentialTerm());
             }
         }, 0, CONTROL_LOOP_INTERVAL, TimeUnit.MILLISECONDS);
 
