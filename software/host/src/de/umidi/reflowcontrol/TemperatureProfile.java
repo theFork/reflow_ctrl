@@ -45,13 +45,17 @@ public class TemperatureProfile {
                 // Extract duration and temperature
                 String strippedLine = line.replaceAll("\\s+", "");
                 String[] split = strippedLine.split(",");
-                int duration = Integer.parseInt(split[0]);
-                int temperature = Integer.parseInt(split[1]);
-
-                // Fill into profile array list
-                for (int i = 0; i < duration; i++) {
-                    profile.add(new Integer(temperature));
+                if (split.length == 2) {
+                    int duration = Integer.parseInt(split[0]);
+                    int temperature = Integer.parseInt(split[1]);
+                    // Fill into profile array list
+                    for (int i = 0; i < duration; i++) {
+                        profile.add(new Integer(temperature));
+                    }
+                } else {
+                    System.err.println("Ignoring illegal line: " + line);
                 }
+
             }
         } catch (IOException e) {
             e.printStackTrace();
