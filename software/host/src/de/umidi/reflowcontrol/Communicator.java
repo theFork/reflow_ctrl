@@ -15,6 +15,8 @@ public final class Communicator {
      */
     private static Communicator instance;
 
+    private boolean isConnected = false;
+
     /**
      * Factory method.
      *
@@ -64,6 +66,7 @@ public final class Communicator {
             System.out.println("Setting parameters`: " + this.port.setParams(9600, 8, 1, 0));
             this.port.writeByte((byte) '\r');
             Thread.sleep(1000);
+            this.isConnected = true;
             return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -74,9 +77,14 @@ public final class Communicator {
     public void disconnect() {
         try {
             System.out.println("Closing port: " + this.port.closePort());
+            this.isConnected = false;
         } catch (final SerialPortException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean isConnected() {
+        return this.isConnected;
     }
 
     public float getTemperature() {

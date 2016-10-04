@@ -69,9 +69,8 @@ public final class ReflowControl {
 
         // Setup communicator
         final Communicator communicator = Communicator.getInstance();
-        if (!communicator.connect("/dev/umidi")) {
-            // TODO: Complain
-        }
+        communicator.connect("/dev/umidi");
+        mainWindow.statusBar.showConnected(communicator.isConnected());
 
         // Start controller task
         Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(new Runnable() {
