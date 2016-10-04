@@ -2,7 +2,6 @@ package de.umidi.reflowcontrol;
 
 import java.awt.EventQueue;
 import java.lang.reflect.InvocationTargetException;
-import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
@@ -91,9 +90,7 @@ public final class ReflowControl {
                 time++;
 
                 // Fetch measured temperature from controller board
-                // TODO: Remove this test code
-                // this.temperature = communicator.getTemperature();
-                this.temperature = setpoint + new Random().nextInt(40) - 20;
+                this.temperature = communicator.getTemperature();
 
                 // Invoke PID controller
                 this.controllerOutput = controller.process(this.temperature);
