@@ -86,6 +86,9 @@ public final class Communicator {
     }
 
     public void shot(int milliseconds) {
-        transceive("shot " + milliseconds / 10);
+        int tenMillis = milliseconds / 10;
+        if (tenMillis > 0) {
+            transceive("shot " + tenMillis);
+        }
     }
 }
