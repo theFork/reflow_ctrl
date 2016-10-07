@@ -22,7 +22,7 @@ public class ReflowController {
 
     ReflowView view = new ReflowView();
     ReflowModel model = new ReflowModel();
-    ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+    ScheduledExecutorService executor;
 
     public static void main(String args[]) {
 
@@ -37,7 +37,6 @@ public class ReflowController {
         reflowController.view.addRunButtonActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 reflowController.startButtonAction();
             }
         });
@@ -46,7 +45,6 @@ public class ReflowController {
         reflowController.view.addStopButtonActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 reflowController.stopButtonAction();
             }
         });
@@ -55,13 +53,13 @@ public class ReflowController {
         reflowController.view.addQuitButtonActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
                 reflowController.quitButtonAction();
             }
         });
     }
 
     private void startButtonAction() {
+        this.executor = Executors.newSingleThreadScheduledExecutor();
         ControlRunnable r = new ControlRunnable();
         this.executor.scheduleAtFixedRate(r, 0, CONTROL_INTERVAL_MILLIS, TimeUnit.MILLISECONDS);
     }
