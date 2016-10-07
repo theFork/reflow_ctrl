@@ -1,4 +1,4 @@
-package de.umidi.reflowcontrol;
+package de.umidi.reflowcontrol.recycler;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

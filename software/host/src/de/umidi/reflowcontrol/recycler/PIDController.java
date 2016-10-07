@@ -1,4 +1,4 @@
-package de.umidi.reflowcontrol;
+package de.umidi.reflowcontrol.recycler;
 
 /**
  * Generic PID controller.

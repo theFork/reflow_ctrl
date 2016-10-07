@@ -1,4 +1,4 @@
-package de.umidi.reflowcontrol.ui;
+package de.umidi.reflowcontrol.recycler;
 
 import java.awt.BorderLayout;
 

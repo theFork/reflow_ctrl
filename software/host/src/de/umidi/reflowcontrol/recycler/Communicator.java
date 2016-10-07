@@ -1,4 +1,4 @@
-package de.umidi.reflowcontrol;
+package de.umidi.reflowcontrol.recycler;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

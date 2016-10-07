@@ -1,12 +1,9 @@
-package de.umidi.reflowcontrol;
+package de.umidi.reflowcontrol.recycler;
 
 import java.awt.EventQueue;
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-
-import de.umidi.reflowcontrol.ui.GraphDataLogger;
-import de.umidi.reflowcontrol.ui.MainWindow;
 
 /**
  * Reflow control program entry and main method.
