@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import de.umidi.reflowcontrol.model.Communicator;
-import de.umidi.reflowcontrol.model.TemperatureProfile;
+import de.umidi.reflowcontrol.model.TemperatureProfileReader;
 
 /**
  * Reflow control program entry and main method.
@@ -40,7 +40,7 @@ public final class ReflowControl {
     /**
      * Current temperature profile.
      */
-    private static TemperatureProfile profile;
+    private static TemperatureProfileReader profile;
 
     /**
      * Program entry point.
@@ -58,9 +58,9 @@ public final class ReflowControl {
                     ReflowControl.mainWindow.setVisible(true);
 
                     // Load temperature profile
-                    profile = new TemperatureProfile();
+                    profile = new TemperatureProfileReader();
                     profile.loadFile("profiles/test.csv");
-                    logger.addTemperatureProfile(profile.getSetpointList());
+                    // logger.addTemperatureProfile(profile.getSetpointList());
                 }
             });
         } catch (InvocationTargetException e) {
@@ -83,7 +83,7 @@ public final class ReflowControl {
             @Override
             public void run() {
                 // Get current setpoint from profile]
-                setpoint = profile.getSetpoint(time);
+                // setpoint = profile.getSetpoint(time);
                 controller.updateSetpoint(setpoint);
                 ReflowControl.mainWindow.statusBar.showTemperatures(setpoint, this.temperature);
                 time++;
