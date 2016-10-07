@@ -1,4 +1,4 @@
-package de.umidi.reflowcontrol.recycler;
+package de.umidi.reflowcontrol.model;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -10,32 +10,9 @@ import jssc.SerialPortException;
  * This class handles communication with the uMidi board controlling the heater.
  */
 public final class Communicator {
-    /**
-     * Static singleton instance.
-     */
-    private static Communicator instance;
 
     private boolean isConnected = false;
-
-    /**
-     * Factory method.
-     *
-     * @return an existing singleton instance or a new one if necessary
-     */
-    public static Communicator getInstance() {
-        if (instance == null) {
-            instance = new Communicator();
-        }
-        return instance;
-    }
-
     private SerialPort port;
-
-    /**
-     * Private default Constructor to avoid instantiation.
-     */
-    private Communicator() {
-    }
 
     private String transceive(String command) {
         try {
@@ -63,7 +40,6 @@ public final class Communicator {
         this.port = new SerialPort(devicePath);
         try {
             System.out.println("Opening port: " + this.port.openPort());
-            System.out.println("Setting parameters`: " + this.port.setParams(9600, 8, 1, 0));
             this.port.writeByte((byte) '\r');
             Thread.sleep(1000);
             this.isConnected = true;
@@ -88,6 +64,8 @@ public final class Communicator {
     }
 
     public float getTemperature() {
+        // TODO: Read three times; Compare; Warn if there is a large difference;
+        // Else return the average
         String reply = transceive("temp");
         float temperature = Float.parseFloat(reply.substring(reply.indexOf(':') + 1));
         return temperature;

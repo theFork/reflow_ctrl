@@ -5,6 +5,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import de.umidi.reflowcontrol.model.Communicator;
+import de.umidi.reflowcontrol.model.TemperatureProfile;
+
 /**
  * Reflow control program entry and main method.
  */
@@ -65,7 +68,7 @@ public final class ReflowControl {
         }
 
         // Setup communicator
-        final Communicator communicator = Communicator.getInstance();
+        final Communicator communicator = new Communicator();
         communicator.connect("/dev/umidi");
         mainWindow.statusBar.showConnected(communicator.isConnected());
 
