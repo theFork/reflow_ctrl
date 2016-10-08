@@ -28,10 +28,12 @@ public class ReflowController {
 
         ReflowController reflowController = new ReflowController();
 
-        // Setup view
-        reflowController.view.setVisible(true);
-
         // Setup model
+
+        // Setup view
+        reflowController.view.loadChartPanel(reflowController.model.getPlotDataset());
+        reflowController.view.setVisible(true);
+        reflowController.view.pack();
 
         // Run button
         reflowController.view.addRunButtonActionListener(new ActionListener() {

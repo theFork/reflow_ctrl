@@ -1,12 +1,15 @@
 package de.umidi.reflowcontrol.model;
 
+import org.jfree.data.general.Dataset;
 import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 public final class ReflowModel {
 
-    // TODO:
+    // This class handles:
     // - Reflow profile
     // - Communicator
+    // - Plot Dataset
     // - Duty cylce calculation
 
     private final String DEFAULT_PROFILE_PATH = "profiles/test.csv";
@@ -23,13 +26,25 @@ public final class ReflowModel {
      */
     private XYSeries temperatureSeries;
 
+    private XYSeriesCollection plotDataset;
+
     public ReflowModel() {
 
         // Init communicator
         this.communicator = new Communicator();
 
-        // Read profile into XYSeries
+        // Init data series
         setpointSeries = TemperatureProfileReader.loadFile(DEFAULT_PROFILE_PATH);
+        setpointSeries.setKey("Setpoint");
+        temperatureSeries = new XYSeries("Measured");
 
+        // Init plot dataset
+        plotDataset = new XYSeriesCollection();
+        plotDataset.addSeries(setpointSeries);
+        plotDataset.addSeries(temperatureSeries);
+    }
+
+    public Dataset getPlotDataset() {
+        return plotDataset;
     }
 }

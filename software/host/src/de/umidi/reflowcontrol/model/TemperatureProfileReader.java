@@ -20,7 +20,7 @@ public class TemperatureProfileReader {
      */
     public static XYSeries loadFile(String path) {
         int valuesAdded = 0;
-        XYSeries profile = new XYSeries("Temperature profile [°C]");
+        XYSeries profile = new XYSeries("");
 
         // Load file
         BufferedReader fileReader = null;
