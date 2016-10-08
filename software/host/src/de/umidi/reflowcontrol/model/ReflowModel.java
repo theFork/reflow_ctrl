@@ -14,6 +14,9 @@ public final class ReflowModel {
 
     private final String DEFAULT_PROFILE_PATH = "profiles/test.csv";
 
+    private final static float FULL_POWER_UNTIL_ERROR_DEG_CELSIUS = 10;
+    private final int LINEAR_RANGE_POWER_MAX_MILLIS = 500;
+
     /**
      * The communicator is made public in order to allow the controller to
      * access its method.
@@ -54,5 +57,35 @@ public final class ReflowModel {
 
     public void addMeasuredValue(int time, float temperature) {
         temperatureSeries.add(time, temperature);
+    }
+
+    public float getSetpoint(int time) {
+        return setpointSeries.getY(time).floatValue();
+    }
+
+    /**
+     * Uses a piecewise linear approach to determine the heating duration
+     * 
+     * @param temperatureSetpoint
+     * @param currentTemperature
+     * @return
+     */
+    public int getNextShotMillis(float temperatureSetpoint, float currentTemperature) {
+
+        float error = temperatureSetpoint - currentTemperature;
+
+        // Don't heat if we're too hot
+        if (error <= 0) {
+            return 0;
+        }
+        // Linear range
+        else if (error <= FULL_POWER_UNTIL_ERROR_DEG_CELSIUS) {
+            float slope = LINEAR_RANGE_POWER_MAX_MILLIS / FULL_POWER_UNTIL_ERROR_DEG_CELSIUS;
+            return (int) (slope * error);
+        }
+        // Full power when we're outside the linear area
+        else {
+            return 1000;
+        }
     }
 }

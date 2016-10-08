@@ -9,9 +9,22 @@ public class ControlRunnable implements Runnable {
      */
     @Override
     public void run() {
-        float tmp = controller.model.communicator.getTemperature();
+        // Get current time
+        int currentTime = controller.getProfilePositionSeconds();
+        System.out.println("t=" + currentTime + " s");
 
-        controller.model.addMeasuredValue(controller.getProfilePositionSeconds(), tmp);
+        // Measure
+        float currentTemperature = controller.model.communicator.getTemperature();
+        controller.model.addMeasuredValue(currentTime, currentTemperature);
+        System.out.println("T_cur=" + currentTemperature + " °C");
+
+        // Heat
+        float setpoint = controller.model.getSetpoint(currentTime);
+        System.out.println("T_set=" + setpoint + " °C");
+        int nextShotMillis = controller.model.getNextShotMillis(setpoint, currentTemperature);
+        System.out.println("Next shot: " + nextShotMillis + " ms");
+        controller.model.communicator.shot(nextShotMillis);
+
         controller.incrementProfilePosition();
     }
 
