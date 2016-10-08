@@ -9,7 +9,7 @@ public class ControlRunnable implements Runnable {
      */
     @Override
     public void run() {
-        float tmp = controller.model.getCurrentTemperature();
+        float tmp = controller.model.communicator.getTemperature();
 
         controller.model.addMeasuredValue(controller.getProfilePositionSeconds(), tmp);
         controller.incrementProfilePosition();

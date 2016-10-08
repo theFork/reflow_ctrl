@@ -52,10 +52,6 @@ public final class ReflowModel {
         return plotDataset;
     }
 
-    public float getCurrentTemperature() {
-        return communicator.getTemperature();
-    }
-
     public void addMeasuredValue(int time, float temperature) {
         temperatureSeries.add(time, temperature);
     }
