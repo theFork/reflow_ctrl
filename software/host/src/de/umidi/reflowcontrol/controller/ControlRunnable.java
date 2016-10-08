@@ -2,12 +2,20 @@ package de.umidi.reflowcontrol.controller;
 
 public class ControlRunnable implements Runnable {
 
+    private ReflowController controller;
+
     /**
      * Executed by the controller in fixed intervals (1s)
      */
     @Override
     public void run() {
-        // TODO
-        System.out.println("hi");
+        float tmp = controller.model.getCurrentTemperature();
+
+        controller.model.addMeasuredValue(controller.getProfilePositionSeconds(), tmp);
+        controller.incrementProfilePosition();
+    }
+
+    public void setController(ReflowController reflowController) {
+        this.controller = reflowController;
     }
 }

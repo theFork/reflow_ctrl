@@ -18,17 +18,24 @@ public class ReflowController {
     // - Runnable for fixed-interval execution
     // - Tear down
 
-    private final int CONTROL_INTERVAL_MILLIS = 1000;
+    private final static int CONTROL_INTERVAL_MILLIS = 1000;
+    private final static String DEFAULT_DEVICE_PATH = "/dev/umidi";
 
     ReflowView view = new ReflowView();
     ReflowModel model = new ReflowModel();
     ScheduledExecutorService executor;
+
+    /**
+     * Time that has passed since playing a profile
+     */
+    private int profilePositionSeconds = -1;
 
     public static void main(String args[]) {
 
         ReflowController reflowController = new ReflowController();
 
         // Setup model
+        reflowController.model.communicator.connect(DEFAULT_DEVICE_PATH);
 
         // Setup view
         reflowController.view.loadChartPanel(reflowController.model.getPlotDataset());
@@ -60,18 +67,39 @@ public class ReflowController {
         });
     }
 
+    /**
+     * Get the current position in the profile
+     * 
+     * @return The time that has passed since the profile was started in seconds
+     *         or -1 when currently stopped.
+     */
+    public int getProfilePositionSeconds() {
+        return this.profilePositionSeconds;
+    }
+
+    public void incrementProfilePosition() {
+        this.profilePositionSeconds++;
+    }
+
     private void startButtonAction() {
+        // Hand the runnable a reference to this class
+        ControlRunnable controlRunnable = new ControlRunnable();
+        controlRunnable.setController(this);
+
+        // Always create a new executer
         this.executor = Executors.newSingleThreadScheduledExecutor();
-        ControlRunnable r = new ControlRunnable();
-        this.executor.scheduleAtFixedRate(r, 0, CONTROL_INTERVAL_MILLIS, TimeUnit.MILLISECONDS);
+        this.executor.scheduleAtFixedRate(controlRunnable, 0, CONTROL_INTERVAL_MILLIS, TimeUnit.MILLISECONDS);
+
+        this.profilePositionSeconds = 0;
     }
 
     private void stopButtonAction() {
         this.executor.shutdown();
+        this.profilePositionSeconds = -1;
     }
 
     private void quitButtonAction() {
-        // TODO: Tear down
+        this.model.communicator.disconnect();
         System.exit(0);
     }
 }

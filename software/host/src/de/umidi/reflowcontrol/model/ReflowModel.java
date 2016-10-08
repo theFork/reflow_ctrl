@@ -14,7 +14,11 @@ public final class ReflowModel {
 
     private final String DEFAULT_PROFILE_PATH = "profiles/test.csv";
 
-    private Communicator communicator;
+    /**
+     * The communicator is made public in order to allow the controller to
+     * access its method.
+     */
+    public Communicator communicator;
 
     /**
      * Series containing temperature setpoints
@@ -46,5 +50,13 @@ public final class ReflowModel {
 
     public Dataset getPlotDataset() {
         return plotDataset;
+    }
+
+    public float getCurrentTemperature() {
+        return communicator.getTemperature();
+    }
+
+    public void addMeasuredValue(int time, float temperature) {
+        temperatureSeries.add(time, temperature);
     }
 }
