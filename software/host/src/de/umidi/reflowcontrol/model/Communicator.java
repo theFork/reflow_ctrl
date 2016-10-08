@@ -37,14 +37,17 @@ public final class Communicator {
     public Boolean connect(String devicePath) {
         LOGGER.entering(getClass().getName(), "connect");
         this.port = new SerialPort(devicePath);
+        if (!port.isOpened()) {
+            LOGGER.severe("Failed to open port " + devicePath);
+            return false;
+        }
         try {
-            LOGGER.info("Opening port " + devicePath);
             this.port.writeByte((byte) '\r');
             Thread.sleep(1000);
             this.isConnected = true;
             return true;
         } catch (Exception e) {
-            LOGGER.warning("Failed to connect to " + devicePath);
+            LOGGER.warning("Failed to write byte");
             e.printStackTrace();
             return false;
         }
@@ -52,6 +55,10 @@ public final class Communicator {
 
     public void disconnect() {
         LOGGER.entering(getClass().getName(), "disconnect");
+        if (!isConnected) {
+            LOGGER.warning("Will not disconnect - already disconnected");
+            return;
+        }
         try {
             LOGGER.info("Closing port: " + this.port.closePort());
             this.isConnected = false;
