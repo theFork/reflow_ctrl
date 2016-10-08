@@ -27,6 +27,7 @@ public class ReflowView extends JFrame {
     private final String PLOT_YLABEL = "T [°C]";
 
     private ButtonBar buttonBar = new ButtonBar();
+    private StatusBar statusBar = new StatusBar();
     private JFreeChart chart;
     private ChartPanel chartPanel;
 
@@ -35,7 +36,9 @@ public class ReflowView extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new BorderLayout(0, 5));
 
+        // Add button and status bars
         this.add(buttonBar, BorderLayout.NORTH);
+        this.add(statusBar, BorderLayout.SOUTH);
     }
 
     public void loadChartPanel(Dataset dataset) {

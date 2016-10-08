@@ -1,4 +1,4 @@
-package de.umidi.reflowcontrol.recycler;
+package de.umidi.reflowcontrol.view;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -95,7 +95,6 @@ public final class StatusBar extends JPanel {
     public void showTemperatures(double setpoint, double currentTemperature) {
         setPointLabel.setText(formatTemperature(setpoint));
         currentTemperatureLabel.setText(formatTemperature(currentTemperature));
-
     }
 
     private String formatTemperature(double temperature) {
