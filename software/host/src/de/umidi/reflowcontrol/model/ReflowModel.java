@@ -33,6 +33,8 @@ public final class ReflowModel {
      */
     private XYSeries temperatureSeries;
 
+    private XYSeries dutyCycleSeries;
+
     private XYSeriesCollection plotDataset;
 
     public ReflowModel() {
@@ -44,11 +46,13 @@ public final class ReflowModel {
         setpointSeries = TemperatureProfileReader.loadFile(DEFAULT_PROFILE_PATH);
         setpointSeries.setKey("Setpoint");
         temperatureSeries = new XYSeries("Measured");
+        dutyCycleSeries = new XYSeries("DutyCycle");
 
         // Init plot dataset
         plotDataset = new XYSeriesCollection();
         plotDataset.addSeries(setpointSeries);
         plotDataset.addSeries(temperatureSeries);
+        plotDataset.addSeries(dutyCycleSeries);
     }
 
     public Dataset getPlotDataset() {
@@ -57,6 +61,10 @@ public final class ReflowModel {
 
     public void addMeasuredValue(int time, float temperature) {
         temperatureSeries.add(time, temperature);
+    }
+
+    public void addDutyCycle(int time, int dutyCycle) {
+        dutyCycleSeries.add(time, dutyCycle);
     }
 
     public float getSetpoint(int time) {

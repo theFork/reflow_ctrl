@@ -18,13 +18,15 @@ public class ControlRunnable implements Runnable {
         controller.model.addMeasuredValue(currentTime, currentTemperature);
         System.out.println("T_cur=" + currentTemperature + " °C");
 
-        // Heat
+        // Determine shot duration / duty cycle
         float setpoint = controller.model.getSetpoint(currentTime);
         System.out.println("T_set=" + setpoint + " °C");
         int nextShotMillis = controller.model.getNextShotMillis(setpoint, currentTemperature);
         System.out.println("Next shot: " + nextShotMillis + " ms");
-        controller.model.communicator.shot(nextShotMillis);
+        controller.model.addDutyCycle(currentTime, (int) (nextShotMillis / 10));
 
+        // Heat
+        controller.model.communicator.shot(nextShotMillis);
         controller.incrementProfilePosition();
     }
 
