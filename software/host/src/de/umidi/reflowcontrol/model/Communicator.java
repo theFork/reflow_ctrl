@@ -1,8 +1,5 @@
 package de.umidi.reflowcontrol.model;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import jssc.SerialPort;
 import jssc.SerialPortException;
 
@@ -17,18 +14,12 @@ public final class Communicator {
     private String transceive(String command) {
         try {
             // Request
-            System.out.println(">> " + command);
             this.port.writeBytes(command.getBytes());
             this.port.writeByte((byte) '\r');
             Thread.sleep(10);
 
-            // Reply, strip reply line omitting local echo
+            // Reply
             final String reply = this.port.readString();
-            final Pattern pattern = Pattern.compile(".*\r\n(.*)\r\n*");
-            final Matcher matcher = pattern.matcher(reply);
-            if (matcher.find()) {
-                System.out.println("<< " + matcher.group(1));
-            }
             return reply;
         } catch (final Exception e) {
             e.printStackTrace();
@@ -64,10 +55,23 @@ public final class Communicator {
     }
 
     public float getTemperature() {
-        // TODO: Read three times; Compare; Warn if there is a large difference;
-        // Else return the average
-        String reply = transceive("temp");
-        float temperature = Float.parseFloat(reply.substring(reply.indexOf(':') + 1));
+        final int sampleCount = 5;
+
+        // Read N values
+        float temperatures[] = new float[sampleCount];
+        for (int i = 0; i < sampleCount; i++) {
+            String reply = transceive("temp");
+            temperatures[i] = Float.parseFloat(reply.substring(reply.indexOf(':') + 1));
+        }
+
+        // TODO: Warn if there are major differences
+
+        // Return the average
+        float temperature = 0;
+        for (int i = 0; i < sampleCount; i++) {
+            temperature += temperatures[i];
+        }
+        temperature = temperature / sampleCount;
         return temperature;
     }
 
