@@ -3,6 +3,7 @@ package de.umidi.reflowcontrol.model;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import org.jfree.data.xy.XYSeries;
 
@@ -12,6 +13,7 @@ import org.jfree.data.xy.XYSeries;
  * temperature in celsius.
  */
 public class TemperatureProfileReader {
+    private static final Logger LOGGER = Logger.getLogger(TemperatureProfileReader.class.getName());
 
     /**
      * Load a given csv file containing a temperature profile
@@ -47,7 +49,7 @@ public class TemperatureProfileReader {
                         profile.add(valuesAdded++, new Integer(temperature));
                     }
                 } else {
-                    System.err.println("Ignoring illegal line: " + line);
+                    LOGGER.warning("Ignoring illegal line: " + line);
                 }
 
             }

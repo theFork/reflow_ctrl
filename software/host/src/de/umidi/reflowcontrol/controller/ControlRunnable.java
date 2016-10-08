@@ -1,8 +1,11 @@
 package de.umidi.reflowcontrol.controller;
 
+import java.util.logging.Logger;
+
 public class ControlRunnable implements Runnable {
 
     private ReflowController controller;
+    private static final Logger LOGGER = Logger.getLogger(ControlRunnable.class.getName());
 
     /**
      * Executed by the controller in fixed intervals (1s)
@@ -11,18 +14,18 @@ public class ControlRunnable implements Runnable {
     public void run() {
         // Get current time
         int currentTime = controller.getProfilePositionSeconds();
-        System.out.println("t=" + currentTime + " s");
+        LOGGER.fine("t=" + currentTime + " s");
 
         // Measure
         float currentTemperature = controller.model.communicator.getTemperature();
         controller.model.addMeasuredValue(currentTime, currentTemperature);
-        System.out.println("T_cur=" + currentTemperature + " °C");
+        LOGGER.fine("T_cur=" + currentTemperature + " °C");
 
         // Determine shot duration / duty cycle
         float setpoint = controller.model.getSetpoint(currentTime);
-        System.out.println("T_set=" + setpoint + " °C");
+        LOGGER.fine("T_set=" + setpoint + " °C");
         int nextShotMillis = controller.model.getNextShotMillis(setpoint, currentTemperature);
-        System.out.println("Next shot: " + nextShotMillis + " ms");
+        LOGGER.fine("Next shot: " + nextShotMillis + " ms");
         controller.model.addDutyCycle(currentTime, (int) (nextShotMillis / 10));
 
         // Heat

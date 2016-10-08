@@ -1,5 +1,7 @@
 package de.umidi.reflowcontrol.model;
 
+import java.util.logging.Logger;
+
 import jssc.SerialPort;
 import jssc.SerialPortException;
 
@@ -11,15 +13,20 @@ public final class Communicator {
     private boolean isConnected = false;
     private SerialPort port;
 
+    private static final Logger LOGGER = Logger.getLogger(Communicator.class.getName());
+
     private String transceive(String command) {
+        LOGGER.entering(getClass().getName(), "transceive");
         try {
             // Request
+            LOGGER.finer("Request: " + command);
             this.port.writeBytes(command.getBytes());
             this.port.writeByte((byte) '\r');
-            Thread.sleep(10);
+            Thread.sleep(50);
 
             // Reply
             final String reply = this.port.readString();
+            LOGGER.finer("Reply: " + reply);
             return reply;
         } catch (final Exception e) {
             e.printStackTrace();
@@ -28,22 +35,25 @@ public final class Communicator {
     }
 
     public Boolean connect(String devicePath) {
+        LOGGER.entering(getClass().getName(), "connect");
         this.port = new SerialPort(devicePath);
         try {
-            System.out.println("Opening port: " + this.port.openPort());
+            LOGGER.info("Opening port " + devicePath);
             this.port.writeByte((byte) '\r');
             Thread.sleep(1000);
             this.isConnected = true;
             return true;
         } catch (Exception e) {
+            LOGGER.warning("Failed to connect to " + devicePath);
             e.printStackTrace();
             return false;
         }
     }
 
     public void disconnect() {
+        LOGGER.entering(getClass().getName(), "disconnect");
         try {
-            System.out.println("Closing port: " + this.port.closePort());
+            LOGGER.info("Closing port: " + this.port.closePort());
             this.isConnected = false;
         } catch (final SerialPortException e) {
             e.printStackTrace();
