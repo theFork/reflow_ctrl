@@ -37,13 +37,17 @@ public final class Communicator {
     public Boolean connect(String devicePath) {
         LOGGER.entering(getClass().getName(), "connect");
         this.port = new SerialPort(devicePath);
-        if (!port.isOpened()) {
-            LOGGER.severe("Failed to open port " + devicePath);
-            return false;
+        try {
+            LOGGER.info("Opening port " + devicePath);
+            if (!port.openPort()) {
+                LOGGER.severe("Failed to open port " + devicePath);
+            }
+        } catch (SerialPortException e1) {
+            e1.printStackTrace();
         }
+
         try {
             this.port.writeByte((byte) '\r');
-            Thread.sleep(1000);
             this.isConnected = true;
             return true;
         } catch (Exception e) {
