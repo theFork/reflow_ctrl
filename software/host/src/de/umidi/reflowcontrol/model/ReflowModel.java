@@ -12,7 +12,7 @@ public final class ReflowModel {
     // - Plot Dataset
     // - Duty cylce calculation
 
-    private final String DEFAULT_PROFILE_PATH = "profiles/test.csv";
+    private final String DEFAULT_PROFILE_PATH = "profiles/pb-free.csv";
 
     private final static float FULL_POWER_UNTIL_ERROR_DEG_CELSIUS = 15;
     private final int LINEAR_RANGE_POWER_MAX_MILLIS = 900;
