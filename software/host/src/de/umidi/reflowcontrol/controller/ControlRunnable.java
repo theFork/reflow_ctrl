@@ -31,6 +31,9 @@ public class ControlRunnable implements Runnable {
         // Heat
         controller.model.communicator.shot(nextShotMillis);
         controller.incrementProfilePosition();
+
+        // Update status bar
+        controller.view.showStatusTemperatures(setpoint, currentTemperature);
     }
 
     public void setController(ReflowController reflowController) {

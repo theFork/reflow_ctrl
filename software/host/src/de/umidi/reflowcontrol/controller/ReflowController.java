@@ -34,13 +34,19 @@ public class ReflowController {
 
         ReflowController reflowController = new ReflowController();
 
-        // Setup model
-        reflowController.model.communicator.connect(DEFAULT_DEVICE_PATH);
+        // Connect
+        Boolean connected = reflowController.model.communicator.connect(DEFAULT_DEVICE_PATH);
+        reflowController.view.showStatusConnected(connected);
 
         // Setup view
         reflowController.view.loadChartPanel(reflowController.model.getPlotDataset());
         reflowController.view.setVisible(true);
         reflowController.view.pack();
+        reflowController.view.showStatusMessage("Welcome");
+
+        // Read current temperature once (TODO: Do this more often ;)
+        float currentTemperature = reflowController.model.communicator.getTemperature();
+        reflowController.view.showStatusTemperatures(0, currentTemperature);
 
         // Run button
         reflowController.view.addRunButtonActionListener(new ActionListener() {
@@ -91,11 +97,15 @@ public class ReflowController {
         this.executor.scheduleAtFixedRate(controlRunnable, 0, CONTROL_INTERVAL_MILLIS, TimeUnit.MILLISECONDS);
 
         this.profilePositionSeconds = 0;
+
+        // Display message
+        this.view.showStatusMessage("Running...");
     }
 
     private void stopButtonAction() {
         this.executor.shutdown();
         this.profilePositionSeconds = -1;
+        this.view.showStatusMessage("Stopped.");
     }
 
     private void quitButtonAction() {

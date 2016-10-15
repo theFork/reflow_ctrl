@@ -49,12 +49,16 @@ public class ReflowView extends JFrame {
 
     /* STATUS BAR SETTERS */
 
-    public void displayStatusConnected(boolean connected) {
-
+    public void showStatusConnected(boolean connected) {
+        this.statusBar.showConnected(connected);
     }
 
-    public void displayStatusMessage(String status) {
+    public void showStatusMessage(String message) {
+        this.statusBar.showMessage(message);
+    }
 
+    public void showStatusTemperatures(double setpoint, double currentTemperature) {
+        this.statusBar.showTemperatures(setpoint, currentTemperature);
     }
 
     /* BUTTON ACTION LISTENER ADDERS */
