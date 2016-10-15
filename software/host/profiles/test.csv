@@ -1,5 +1,9 @@
 # Temperature profile for testing
+
+# Syntax: <Duration>,<Temperature>
+#         <Duration>,<TemperatureStart>..<TemperatureEnd>
+
+180,50..100
 180,80
-180,80
-180,90
-180,100
+180,80..150
+180,130
