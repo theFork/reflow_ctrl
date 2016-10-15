@@ -14,7 +14,7 @@ public final class ReflowModel {
 
     private final String DEFAULT_PROFILE_PATH = "profiles/pb-free.csv";
 
-    private final static float FULL_POWER_UNTIL_ERROR_DEG_CELSIUS = 15;
+    private final static float FULL_POWER_UNTIL_ERROR_DEG_CELSIUS = 5;
     private final int LINEAR_RANGE_POWER_MAX_MILLIS = 900;
     private final int LINEAR_RANGE_POWER_MIN_MILLIS = 100;
 
