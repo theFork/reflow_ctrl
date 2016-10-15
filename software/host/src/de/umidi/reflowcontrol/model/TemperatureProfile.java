@@ -70,10 +70,19 @@ public class TemperatureProfile {
 
         int duration = Integer.parseInt(durationString);
 
-        // Test whether temperature contains ".."
+        // Test whether temperature contains ".." -> Linear function
         if (temperaturesString.contains("..")) {
             // Expect two integers separated by two dots
-            // TODO
+            String[] splitTemperatures = temperaturesString.split("[.][.]");
+            int startTemperature = Integer.parseInt(splitTemperatures[0]);
+            int endTemperature = Integer.parseInt(splitTemperatures[1]);
+            float slope = (float) (endTemperature - startTemperature) / duration;
+
+            // Insert linear function
+            for (int i = 0; i < duration; i++) {
+                int temperature = startTemperature + (int) (slope * i);
+                profile.add(this.valueCount++, new Integer(temperature));
+            }
 
         } else {
             // No dots -> Constant temperature
