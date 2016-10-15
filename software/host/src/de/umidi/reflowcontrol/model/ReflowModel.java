@@ -14,8 +14,9 @@ public final class ReflowModel {
 
     private final String DEFAULT_PROFILE_PATH = "profiles/test.csv";
 
-    private final static float FULL_POWER_UNTIL_ERROR_DEG_CELSIUS = 10;
-    private final int LINEAR_RANGE_POWER_MAX_MILLIS = 500;
+    private final static float FULL_POWER_UNTIL_ERROR_DEG_CELSIUS = 15;
+    private final int LINEAR_RANGE_POWER_MAX_MILLIS = 900;
+    private final int LINEAR_RANGE_POWER_MIN_MILLIS = 100;
 
     /**
      * The communicator is made public in order to allow the controller to
@@ -88,8 +89,10 @@ public final class ReflowModel {
         }
         // Linear range
         else if (error <= FULL_POWER_UNTIL_ERROR_DEG_CELSIUS) {
-            float slope = LINEAR_RANGE_POWER_MAX_MILLIS / FULL_POWER_UNTIL_ERROR_DEG_CELSIUS;
-            return (int) (slope * error);
+            float slope = (LINEAR_RANGE_POWER_MAX_MILLIS - LINEAR_RANGE_POWER_MIN_MILLIS)
+                    / FULL_POWER_UNTIL_ERROR_DEG_CELSIUS;
+            int shotMillis = (int) ((slope * error) + LINEAR_RANGE_POWER_MIN_MILLIS);
+            return shotMillis;
         }
         // Full power when we're outside the linear area
         else {
