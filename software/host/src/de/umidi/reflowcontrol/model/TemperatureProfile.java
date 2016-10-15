@@ -7,19 +7,14 @@ import java.util.logging.Logger;
 
 import org.jfree.data.xy.XYSeries;
 
-/**
- * Handles retrieval of temperature profiles from CSV files. Each line consists
- * of two integers: duration, temperature. The duration is given in seconds, the
- * temperature in celsius.
- */
-public class TemperatureProfileReader {
-    private static final Logger LOGGER = Logger.getLogger(TemperatureProfileReader.class.getName());
+public class TemperatureProfile {
+    private static final Logger LOGGER = Logger.getLogger(TemperatureProfile.class.getName());
 
     private String csvFilePath;
     private int valueCount;
     private XYSeries profile;
 
-    public TemperatureProfileReader(String csvFilePath) {
+    public TemperatureProfile(String csvFilePath) {
         this.csvFilePath = csvFilePath;
     }
 
@@ -58,20 +53,36 @@ public class TemperatureProfileReader {
             return;
         }
 
-        // Extract duration and temperature
+        // Strip whitespace and split line
         String strippedLine = line.replaceAll("\\s+", "");
         String[] split = strippedLine.split(",");
 
-        if (split.length == 2) {
-            int duration = Integer.parseInt(split[0]);
-            int temperature = Integer.parseInt(split[1]);
+        // There should be two elements; Else return
+        if (split.length != 2) {
+            if (!strippedLine.isEmpty()) {
+                // Warn if a non-empty line does not contain two elements
+                LOGGER.warning("Ignoring illegal line: " + line);
+            }
+            return;
+        }
+        String durationString = split[0];
+        String temperaturesString = split[1];
 
-            // Fill into profile XYSeries second-by-second
+        int duration = Integer.parseInt(durationString);
+
+        // Test whether temperature contains ".."
+        if (temperaturesString.contains("..")) {
+            // Expect two integers separated by two dots
+            // TODO
+
+        } else {
+            // No dots -> Constant temperature
+            int temperature = Integer.parseInt(temperaturesString);
+
+            // Insert into profile XYSeries second-by-second
             for (int i = 0; i < duration; i++) {
                 profile.add(this.valueCount++, new Integer(temperature));
             }
-        } else if (!strippedLine.isEmpty()) {
-            LOGGER.warning("Ignoring illegal line: " + line);
         }
 
     }
