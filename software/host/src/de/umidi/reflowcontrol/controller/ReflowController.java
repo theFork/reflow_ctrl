@@ -88,6 +88,10 @@ public class ReflowController {
     }
 
     private void startButtonAction() {
+
+        // Clean up previously recorded data
+        this.model.clearSeries();
+
         // Hand the runnable a reference to this class
         ControlRunnable controlRunnable = new ControlRunnable();
         controlRunnable.setController(this);

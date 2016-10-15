@@ -99,4 +99,12 @@ public final class ReflowModel {
             return 1000;
         }
     }
+
+    /**
+     * Clears temperature and duty cycle series
+     */
+    public void clearSeries() {
+        temperatureSeries.clear();
+        dutyCycleSeries.clear();
+    }
 }
