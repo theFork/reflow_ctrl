@@ -49,7 +49,9 @@ public class TemperatureProfileReader {
                         profile.add(valuesAdded++, new Integer(temperature));
                     }
                 } else {
-                    LOGGER.warning("Ignoring illegal line: " + line);
+                    if (!strippedLine.isEmpty()) {
+                        LOGGER.warning("Ignoring illegal line: " + line);
+                    }
                 }
 
             }
