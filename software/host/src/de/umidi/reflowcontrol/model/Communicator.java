@@ -15,6 +15,11 @@ public final class Communicator {
 
     private static final Logger LOGGER = Logger.getLogger(Communicator.class.getName());
 
+    /**
+     * Specifies the range in which measured value may scatter without a warning
+     */
+    private static final float MAX_SCATTERING_DEGREES = 1.0f;
+
     private String transceive(String command) {
         LOGGER.entering(getClass().getName(), "transceive");
         try {
@@ -85,7 +90,20 @@ public final class Communicator {
             temperatures[i] = Float.parseFloat(reply.substring(reply.indexOf(':') + 1));
         }
 
-        // TODO: Warn if there are major differences
+        // Check and warn if there are major differences
+        float min = Float.MAX_VALUE;
+        float max = 0;
+        for (float f : temperatures) {
+            if (f > max) {
+                max = f;
+            }
+            if (f < min) {
+                min = f;
+            }
+        }
+        if ((max - min) > MAX_SCATTERING_DEGREES) {
+            LOGGER.warning("Major differences in measured temperatures: Min=" + min + ", Max=" + max);
+        }
 
         // Return the average
         float temperature = 0;
@@ -102,4 +120,5 @@ public final class Communicator {
             transceive("shot " + tenMillis);
         }
     }
+
 }
