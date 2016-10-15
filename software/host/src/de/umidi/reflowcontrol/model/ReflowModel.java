@@ -44,7 +44,8 @@ public final class ReflowModel {
         this.communicator = new Communicator();
 
         // Init data series
-        setpointSeries = TemperatureProfileReader.loadFile(DEFAULT_PROFILE_PATH);
+        TemperatureProfileReader reader = new TemperatureProfileReader(DEFAULT_PROFILE_PATH);
+        setpointSeries = reader.getSetpointSeries();
         setpointSeries.setKey("Setpoint");
         temperatureSeries = new XYSeries("Measured");
         dutyCycleSeries = new XYSeries("DutyCycle");

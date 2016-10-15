@@ -15,45 +15,29 @@ import org.jfree.data.xy.XYSeries;
 public class TemperatureProfileReader {
     private static final Logger LOGGER = Logger.getLogger(TemperatureProfileReader.class.getName());
 
+    private String csvFilePath;
+    private int valueCount;
+    private XYSeries profile;
+
+    public TemperatureProfileReader(String csvFilePath) {
+        this.csvFilePath = csvFilePath;
+    }
+
     /**
-     * Load a given csv file containing a temperature profile
-     * 
-     * @param path
+     * Load CSV file and create XYProfile containing setpoints
      */
-    public static XYSeries loadFile(String path) {
-        int valuesAdded = 0;
-        XYSeries profile = new XYSeries("");
+    public XYSeries getSetpointSeries() {
+        this.valueCount = 0;
+        this.profile = new XYSeries("");
 
         // Load file
         BufferedReader fileReader = null;
         try {
             // Read file line by line
-            fileReader = new BufferedReader(new FileReader(path));
+            fileReader = new BufferedReader(new FileReader(csvFilePath));
             String line;
             while ((line = fileReader.readLine()) != null) {
-
-                // Ignore lines starting with #
-                if (line.startsWith("#")) {
-                    continue;
-                }
-
-                // Extract duration and temperature
-                String strippedLine = line.replaceAll("\\s+", "");
-                String[] split = strippedLine.split(",");
-                if (split.length == 2) {
-                    int duration = Integer.parseInt(split[0]);
-                    int temperature = Integer.parseInt(split[1]);
-
-                    // Fill into profile XYSeries
-                    for (int i = 0; i < duration; i++) {
-                        profile.add(valuesAdded++, new Integer(temperature));
-                    }
-                } else {
-                    if (!strippedLine.isEmpty()) {
-                        LOGGER.warning("Ignoring illegal line: " + line);
-                    }
-                }
-
+                parseLine(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -66,5 +50,29 @@ public class TemperatureProfileReader {
             }
         }
         return profile;
+    }
+
+    private void parseLine(String line) {
+        // Ignore lines starting with #
+        if (line.startsWith("#")) {
+            return;
+        }
+
+        // Extract duration and temperature
+        String strippedLine = line.replaceAll("\\s+", "");
+        String[] split = strippedLine.split(",");
+
+        if (split.length == 2) {
+            int duration = Integer.parseInt(split[0]);
+            int temperature = Integer.parseInt(split[1]);
+
+            // Fill into profile XYSeries second-by-second
+            for (int i = 0; i < duration; i++) {
+                profile.add(this.valueCount++, new Integer(temperature));
+            }
+        } else if (!strippedLine.isEmpty()) {
+            LOGGER.warning("Ignoring illegal line: " + line);
+        }
+
     }
 }
