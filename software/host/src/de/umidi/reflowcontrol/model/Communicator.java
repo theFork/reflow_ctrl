@@ -53,6 +53,7 @@ public final class Communicator {
 
         try {
             this.port.writeByte((byte) '\r');
+            Thread.sleep(50);
             this.isConnected = true;
             return true;
         } catch (Exception e) {
