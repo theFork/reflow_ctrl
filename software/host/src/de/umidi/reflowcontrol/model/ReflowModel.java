@@ -14,10 +14,6 @@ public final class ReflowModel {
 
     private final String DEFAULT_PROFILE_PATH = "profiles/pb-free.csv";
 
-    private final static float FULL_POWER_UNTIL_ERROR_DEG_CELSIUS = 5;
-    private final int LINEAR_RANGE_POWER_MAX_MILLIS = 900;
-    private final int LINEAR_RANGE_POWER_MIN_MILLIS = 100;
-
     /**
      * The communicator is made public in order to allow the controller to
      * access its method.
@@ -74,7 +70,7 @@ public final class ReflowModel {
     }
 
     /**
-     * Uses a piecewise linear approach to determine the heating duration
+     * Determine the heating duration
      * 
      * @param temperatureSetpoint
      * @param currentTemperature
@@ -88,14 +84,7 @@ public final class ReflowModel {
         if (error <= 0) {
             return 0;
         }
-        // Linear range
-        else if (error <= FULL_POWER_UNTIL_ERROR_DEG_CELSIUS) {
-            float slope = (LINEAR_RANGE_POWER_MAX_MILLIS - LINEAR_RANGE_POWER_MIN_MILLIS)
-                    / FULL_POWER_UNTIL_ERROR_DEG_CELSIUS;
-            int shotMillis = (int) ((slope * error) + LINEAR_RANGE_POWER_MIN_MILLIS);
-            return shotMillis;
-        }
-        // Full power when we're outside the linear area
+        // Full power if we're too cold
         else {
             return 1000;
         }
