@@ -29,6 +29,8 @@ public class ReflowController {
     ReflowModel model = new ReflowModel();
     ScheduledExecutorService executor;
 
+    ControlRunnable controlRunnable;
+
     /**
      * Time that has passed since playing a profile
      */
@@ -51,9 +53,8 @@ public class ReflowController {
         reflowController.view.pack();
         reflowController.view.showStatusMessage("Welcome");
 
-        // Read current temperature once (TODO: Do this more often ;)
-        float currentTemperature = reflowController.model.communicator.getTemperature();
-        reflowController.view.showStatusTemperatures(0, currentTemperature);
+        // Start per-second-runnable
+        reflowController.setupRunnable();
 
         // Run button
         reflowController.view.addRunButtonActionListener(new ActionListener() {
@@ -80,6 +81,16 @@ public class ReflowController {
         });
     }
 
+    public void setupRunnable() {
+        // Hand the runnable a reference to this class
+        controlRunnable = new ControlRunnable();
+        controlRunnable.setController(this);
+
+        // Create a new executer
+        this.executor = Executors.newSingleThreadScheduledExecutor();
+        this.executor.scheduleAtFixedRate(controlRunnable, 0, CONTROL_INTERVAL_MILLIS, TimeUnit.MILLISECONDS);
+    }
+
     /**
      * Get the current position in the profile
      * 
@@ -99,14 +110,8 @@ public class ReflowController {
         // Clean up previously recorded data
         this.model.clearSeries();
 
-        // Hand the runnable a reference to this class
-        ControlRunnable controlRunnable = new ControlRunnable();
-        controlRunnable.setController(this);
-
-        // Always create a new executer
-        this.executor = Executors.newSingleThreadScheduledExecutor();
-        this.executor.scheduleAtFixedRate(controlRunnable, 0, CONTROL_INTERVAL_MILLIS, TimeUnit.MILLISECONDS);
-
+        // Start
+        this.controlRunnable.setRunning(true);
         this.profilePositionSeconds = 0;
 
         // Display message
@@ -114,8 +119,10 @@ public class ReflowController {
     }
 
     private void stopButtonAction() {
-        this.executor.shutdown();
+        this.controlRunnable.setRunning(false);
         this.profilePositionSeconds = -1;
+
+        // Display message
         this.view.showStatusMessage("Stopped.");
     }
 

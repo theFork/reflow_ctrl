@@ -4,6 +4,8 @@ import java.util.logging.Logger;
 
 public class ControlRunnable implements Runnable {
 
+    private boolean running = false;
+
     private ReflowController controller;
     private static final Logger LOGGER = Logger.getLogger(ControlRunnable.class.getName());
 
@@ -12,14 +14,22 @@ public class ControlRunnable implements Runnable {
      */
     @Override
     public void run() {
+
         // Get current time
         int currentTime = controller.getProfilePositionSeconds();
         LOGGER.fine("t=" + currentTime + " s");
 
         // Measure
         float currentTemperature = controller.model.communicator.getTemperature();
-        controller.model.addMeasuredValue(currentTime, currentTemperature);
         LOGGER.fine("T_cur=" + currentTemperature + " °C");
+
+        if (!running) {
+            controller.view.showStatusTemperatures(0, currentTemperature);
+            return;
+        }
+
+        // Add current temperature to plot
+        controller.model.addMeasuredValue(currentTime, currentTemperature);
 
         // Determine shot duration / duty cycle
         float setpoint = controller.model.getSetpoint(currentTime);
@@ -38,5 +48,9 @@ public class ControlRunnable implements Runnable {
 
     public void setController(ReflowController reflowController) {
         this.controller = reflowController;
+    }
+
+    public void setRunning(boolean running) {
+        this.running = running;
     }
 }
