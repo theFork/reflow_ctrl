@@ -5,8 +5,10 @@ import java.awt.event.ActionListener;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 import de.umidi.reflowcontrol.model.ReflowModel;
+import de.umidi.reflowcontrol.model.TemperatureProfile;
 import de.umidi.reflowcontrol.view.ReflowView;
 
 /**
@@ -17,6 +19,8 @@ public class ReflowController {
     // - Main function and setup
     // - Runnable for fixed-interval execution
     // - Tear down
+
+    private static final Logger LOGGER = Logger.getLogger(TemperatureProfile.class.getName());
 
     private final static int CONTROL_INTERVAL_MILLIS = 1000;
     private final static String DEFAULT_DEVICE_PATH = "/dev/umidi";
@@ -36,6 +40,9 @@ public class ReflowController {
 
         // Connect
         Boolean connected = reflowController.model.communicator.connect(DEFAULT_DEVICE_PATH);
+        if (!connected) {
+            LOGGER.warning("Connect method returned false.");
+        }
         reflowController.view.showStatusConnected(connected);
 
         // Setup view
