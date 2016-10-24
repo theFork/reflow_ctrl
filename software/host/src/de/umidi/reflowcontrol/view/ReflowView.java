@@ -1,6 +1,8 @@
 package de.umidi.reflowcontrol.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Rectangle;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
@@ -8,6 +10,8 @@ import javax.swing.JFrame;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.general.Dataset;
 import org.jfree.data.xy.XYDataset;
 
@@ -41,10 +45,37 @@ public class ReflowView extends JFrame {
         this.add(statusBar, BorderLayout.SOUTH);
     }
 
+    /**
+     * Initialize and display chart panel
+     * 
+     * @param dataset
+     *            the dataset to be linked to the chart panel
+     */
     public void loadChartPanel(Dataset dataset) {
         this.chart = ChartFactory.createXYLineChart(PLOT_TITLE, PLOT_XLABEL, PLOT_YLABEL, (XYDataset) dataset);
+
+        // Configure renderer
+        final XYPlot plot = chart.getXYPlot();
+        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(false, true);
+
+        styleRendererSeries(renderer, 0, true, false, Color.GREEN, 1, 1); // setpoint
+        styleRendererSeries(renderer, 1, true, false, Color.RED, 5, 5); // current
+                                                                        // temperature
+        styleRendererSeries(renderer, 2, false, true, Color.DARK_GRAY, 3, 1); // duty
+                                                                              // cycle
+        plot.setRenderer(renderer);
+
         this.chartPanel = new ChartPanel(chart);
         this.add(chartPanel, BorderLayout.CENTER);
+    }
+
+    private void styleRendererSeries(XYLineAndShapeRenderer renderer, int seriesID, boolean lines, boolean shapes,
+            Color color, int width, int height) {
+        renderer.setSeriesPaint(seriesID, color);
+        renderer.setSeriesShape(seriesID, new Rectangle((int) -(width / 2), (int) -(height / 2), width, height));
+
+        renderer.setSeriesLinesVisible(seriesID, lines);
+        renderer.setSeriesShapesVisible(seriesID, shapes);
     }
 
     /* STATUS BAR SETTERS */
