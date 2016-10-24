@@ -47,6 +47,8 @@ public final class Communicator {
             if (!port.openPort()) {
                 LOGGER.severe("Failed to open port " + devicePath);
             }
+            port.setParams(SerialPort.BAUDRATE_115200, 8, 1, 0);
+            port.setFlowControlMode(SerialPort.FLOWCONTROL_RTSCTS_IN | SerialPort.FLOWCONTROL_RTSCTS_OUT);
         } catch (SerialPortException e1) {
             e1.printStackTrace();
         }
